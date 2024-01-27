@@ -61,7 +61,7 @@ class View():
         container2.grid_columnconfigure(1, weight=1)
         container2.grid_columnconfigure(2, weight=1)
         container2.grid_rowconfigure(0, weight=1)
-
+        
         # avoir acces plustard
         self.hourVar = hourVar
         self.minuteVar = minuteVar
