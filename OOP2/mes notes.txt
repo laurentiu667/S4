@@ -1,5 +1,0 @@
-manifest = fichier de publication de l application ( comme une signature )
-
-MainActivity = Contient la logique de l'application
-
-dossier drawable : dossier image, tout ce qui est design ( ressource visuelle )
