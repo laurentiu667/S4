@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">login</string>
+    <string name="titre">Ouverture de session</string>
+</resources>
