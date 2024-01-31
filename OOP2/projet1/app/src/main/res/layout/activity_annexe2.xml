@@ -52,24 +52,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/transferA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="460dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/aPersonne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="380dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,7 +132,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/envoyer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="544dp"
@@ -147,13 +149,21 @@
         android:id="@+id/champSolde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="284dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="251dp"
+        android:layout_height="21dp"
+        android:spinnerMode="dropdown"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="631dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
