@@ -142,10 +142,13 @@ class Lievre:
 
     def manger(self, arbustes):
         # Logique de manger des arbustes
+        
+        
         pass
 
     def deplacer(self):
         # Logique de déplacement
+        
         pass
 
 class Arbuste:
@@ -164,4 +167,8 @@ class Arbuste:
         if self.taille < self.taille_max:
             self.taille += 0.1
 
+
+
+
+            
 

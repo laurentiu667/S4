@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Set up primary colors */
+:root {
+  
+}
+
+/* Set box sizing to border-box for all elements */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Professional colors */
+:root {
+    
+    --primary-color: #114442;
+    --secondary-color: #0c3130;
+    --third-color: #082020;
+    --fourth-color: #051515;
+    --fifth-color: #041111;
+    --sixth-color: #030e0e;
+    --seventh-color: #031111;
+    --container-color: #071b1b;
+    
+    --color1: #000000;
+    --color2: #ffffff;
+    --color3: #808080;
+    --color4: #800000;
+    --color5: #008000;
+    --color6: #808000;
+    --color7: #000080;
+    --color8: #800080;
+    --color9: #008080;
+    --color10: #c0c0c0;
+    --color11: #ff0000;
+    --color12: #00ff00;
+    --color13: #ffff00;
+    --color14: #0000ff;
+    --color15: #ff00ff;
+    --color16: #00ffff;
+    --color17: #ff8000;
+    --color18: #8000ff;
+    --color19: #0080ff;
+    --color20: #80ff00;
+    --color21: #ff0080;
+    --color22: #00ff80;
+    --color23: #80ff80;
+    --color24: #ff8080;
+    --color25: #8080ff;
+    --color26: #ff80ff;
+    --color27: #80ffff;
+    --color28: #ffbf00;
+    --color29: #bf00ff;
+    --color30: #00ffbf;
+    --color31: #bfff00;
+    --color32: #00bfff;
+    --color33: #ff00bf;
+    --color34: #bfbf00;
+    --color35: #00bfbf;
+    --color36: #bfbfff;
+    --color37: #ffbf80;
+    --color38: #80bfff;
+    --color39: #ff80bf;
+    --color40: #bfff80;
+    --color41: #80ffbf;
+    --color42: #bfbfff;
+    --color43: #ffbfbf;
+    --color44: #bfbfff;
+    --color45: #bfff80;
+    --color46: #80bfff;
+    --color47: #ff80bf;
+    --color48: #bf80ff;
+    --color49: #80ffbf;
+    --color50: #bfff80;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    background: linear-gradient(
+    30deg,
+        var(--seventh-color) 0%,
+        var(--sixth-color) 10%,
+        var(--fifth-color) 20%,
+        var(--fourth-color) 35%,
+        var(--third-color) 50%,
+        var(--secondary-color) 60%,
+        var(--primary-color) 80%
+  );
+
+}
+
+.container, .container2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 25em;
+   
+    border-radius: .65em;
+    border: .05em solid var(--seventh-color);
+}
+.container{
+    background-color: var(--container-color);
+    height: 15em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .5em;
+    gap: 0.25em;
+    position: relative;
+}
+.container > h1{
+    font-weight: 400;
+    font-size: 2.5em;
+    color: white;
+}
+.container > ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: .08em;
+    width: 90%;
+}
+.container > ul li {
+    color: white;
+    text-align: center;
+    font-size: .7em;
+}
+
+.container-button{
+    width: 90%;
+    height: 3em;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.50em;
+    background: linear-gradient(45deg, #4FFEEF 4%, #4FFEEF 96%);
+}
+.container2{
+    background-color: var(--container-color);
+    border: .05em solid var(--seventh-color);
+    height: 15em;
+}
+.container > * {
+    z-index: 100;
+}
+.lueur {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    filter: blur(80px);
+    z-index: 1;
+}
+
+.battery{
+    position: relative;
+}
+
+.upBattery{
+    position: absolute;
+    top: 100px;
+    left: 35.5px;
+    width: 0%;
+    height: 64px;
+    border-radius: 0.35em;
+    background-color: var(--color44);
+
+}
