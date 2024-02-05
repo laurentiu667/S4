@@ -65,13 +65,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/aPersonne"
+        android:id="@+id/mail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="380dp"
         android:ems="10"
+        android:hint="Votre choix"
         android:inputType="textPersonName"
         android:textColor="#000000"
+        android:textColorHint="#474747"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,16 +86,17 @@
         android:layout_marginTop="136dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.81"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/solde"
         android:layout_width="71dp"
         android:layout_height="29dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="304dp"
         android:text="Solde :"
         android:textAlignment="viewStart"
         android:textColor="#000000"
@@ -132,16 +135,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/envoyer"
+        android:id="@+id/envoyerButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="544dp"
+        android:layout_marginTop="540dp"
         android:backgroundTint="#89C7FF"
         android:foregroundTint="#000000"
         android:text="Envoyer"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -149,7 +152,7 @@
         android:id="@+id/champSolde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
+        android:layout_marginTop="288dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textColor="#000000"
