@@ -31,10 +31,14 @@ class Controleur:
             self.vue.afficher_statistiques(self.modele.statistiques)
 
             # Planifier la prochaine mise à jour
-            self.vue.root.after(50, self.mise_a_jour)
+            self.vue.root.after(10, self.mise_a_jour)
 
     def arreter_simulation(self):
         # Logique pour arrêter la simulation
+        self.running = False
+        self.vue.afficher_cadre("principal")
+        s
+    
         pass
 
 if __name__ == "__main__":

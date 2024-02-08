@@ -57,6 +57,7 @@ public class Annexe2 extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+<<<<<<< HEAD
             solde_global = 500.0;
 
             if (v == boutonValiderVar){
@@ -79,6 +80,9 @@ public class Annexe2 extends AppCompatActivity {
             }
 
 
+=======
+            champSolde.setText("32432432");
+>>>>>>> 8190f91 (philo)
         }
 
 
