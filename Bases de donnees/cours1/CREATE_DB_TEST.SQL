@@ -1,16 +1,20 @@
--- Database: DB_TEST
+-- Supprimer la base de données si elle existe
+DROP DATABASE IF EXISTS "DB_TEST";
 
-DROP DATABASE "DB_TEST" WITH (FORCE);
-
+-- Créer la base de données en utilisant template0 comme modèle
 CREATE DATABASE "DB_TEST"
     WITH
     OWNER = postgres
     ENCODING = 'UTF8'
-    LC_COLLATE = 'French_Canada.1252'
-    LC_CTYPE = 'French_Canada.1252'
+    TEMPLATE = template0
     TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+    CONNECTION LIMIT = -1;
 
-COMMENT ON DATABASE "DB_TEST"
-    IS 'Ma première base de données';
+-- Définir la collation et le type de caractères après la création de la base de données
+ALTER DATABASE "DB_TEST" 
+    OWNER TO postgres 
+    LC_COLLATE = 'French_Canada.1252' 
+    LC_CTYPE = 'French_Canada.1252';
+
+-- Ajouter un commentaire à la base de données
+COMMENT ON DATABASE "DB_TEST" IS 'Ma première base de données';
