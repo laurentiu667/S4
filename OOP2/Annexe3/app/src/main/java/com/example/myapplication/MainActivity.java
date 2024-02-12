@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -65,10 +66,17 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 somme += bouteille_eau;
             }
-            if (somme < 2000){
+            if (somme <= 2000){
                 nombre_litre.setText(String.valueOf(somme));
+                barre.setProgress(somme);
+            } else {
+                somme = 2000;
+                nombre_litre.setText(String.valueOf(somme));
+                barre.setProgress(somme);
+                Toast.makeText(getApplicationContext(), "Tu as consommé plus de 2 litres", Toast.LENGTH_SHORT).show();
+
             }
-            barre.setProgress(somme);
+
         }
 
     }
