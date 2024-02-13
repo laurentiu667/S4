@@ -84,7 +84,27 @@ class Modele:
         if dico:
             del dico[id_objet]
 
-class Loup:
+
+class Animaux:
+    def __init__(self, parent, id_objet, position):
+        self.parent = parent
+        self.id_objet = id_objet
+        self.sante = 100
+        self.position = position
+        self.vitesse = 0
+        self.faim = True
+
+    def mise_a_jour(self):
+        pass
+
+    def manger(self, arbustes):
+        # Logique de manger des arbustes
+        pass
+
+    def deplacer(self):
+        # Logique de déplacement
+        pass
+class Loup(Animaux):
     def __init__(self, parent, id_objet, position):
         self.parent = parent
         self.id_objet = id_objet
@@ -94,6 +114,7 @@ class Loup:
         self.vitesse = 3
         self.proie_visee = None
         self.faim = True
+        super().__init__(parent, id_objet, position)
 
     def mise_a_jour(self):
         if self.proie_visee:
@@ -148,6 +169,7 @@ class Lievre:
 
     def deplacer(self):
         # Logique de déplacement
+
         
         pass
 

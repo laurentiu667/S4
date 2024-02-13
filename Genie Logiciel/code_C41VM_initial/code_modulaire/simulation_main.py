@@ -37,9 +37,8 @@ class Controleur:
         # Logique pour arrêter la simulation
         self.running = False
         self.vue.afficher_cadre("principal")
-        s
-    
-        pass
+
+
 
 if __name__ == "__main__":
     controleur = Controleur()
