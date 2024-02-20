@@ -8,24 +8,21 @@ import android.widget.*;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Hashtable;
 import java.util.Locale;
+import java.util.Set;
 import java.util.Vector;
 
-import com.example.login.Compte;
-
 public class Annexe2 extends AppCompatActivity {
-    Ecouteur ec;
 
-    Button boutonValiderVar;
-    TextView champSoldeVar;
-    Spinner spinnerNomCompteVar;
-
-    TextView mail;
-    TextView Atransfer;
     Button boutonEnvoyerVar;
-    Vector<String> choix;
-    Double solde_global;
+    Spinner spinnerNomCompteVar;
+    TextView champSoldeVar;
+    TextView mail;
+    TextView argentdonner;
 
+    Vector<String> choix;
+    Hashtable<String, Compte> lesComptes;
     DecimalFormat df;
 
     @Override
@@ -33,70 +30,64 @@ public class Annexe2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_annexe2);
 
-        // initialiser les variables
         spinnerNomCompteVar = findViewById(R.id.spinnercompte);
         champSoldeVar = findViewById(R.id.champSolde);
 
-        // obligatoirement deux chiffres apres la virgule
-        df = new DecimalFormat("0.00$", new DecimalFormatSymbols(Locale.US));
-
-        choix = new Vector();
-        choix.add("CHEQUE");
-        choix.add("EPARGNE");
-        choix.add("EPARGNEPLUS");
-
-
         mail = findViewById(R.id.mail);
-        Atransfer = findViewById(R.id.transferA);
-
+        argentdonner = findViewById(R.id.argentdonner);
         boutonEnvoyerVar = findViewById(R.id.envoyerButton);
 
-        // 1 er etape : creation de l ecouteur
-        ec = new Ecouteur();
-        boutonEnvoyerVar.setOnClickListener(ec);
+        df = new DecimalFormat("0.00$", new DecimalFormatSymbols(Locale.US));
 
+        lesComptes = new Hashtable<>();
+        lesComptes.put("CHEQUE", new Compte("CHEQUE", 500.0));
+        lesComptes.put("EPARGNE", new Compte("EPARGNE", 1000.0));
+        lesComptes.put("EPARGNEPLUS", new Compte("EPARGNEPLUS", 1500.0));
 
+        Set<String> ensCles = lesComptes.keySet();
+        choix = new Vector<>(ensCles);
 
-        // Spinner
-        // this parce que on est dans une classe anonyme
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, choix);
-        spinnerNomCompteVar.setAdapter(adapter);
+        boutonEnvoyerVar.setOnClickListener(new Ecouteur());
+        spinnerNomCompteVar.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, choix));
+        spinnerNomCompteVar.setOnItemSelectedListener(new Ecouteur());
 
-        spinnerNomCompteVar.setOnItemSelectedListener(ec);
+        for (String str : ensCles)
+            System.out.println(str);
 
-        Compte cheque = new Compte("CHEQUE", 500);
-        Compte epargne = new Compte("EPARGE", 1000);
-        Compte epargneplus = new Compte("EPARGNEPLUS", 1500);
-
+        for (Compte p : lesComptes.values())
+            System.out.println(p.getSolde());
     }
 
     private class Ecouteur implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
         @Override
         public void onClick(View v) {
-            solde_global = 500.0;
+            if (v == boutonEnvoyerVar) {
 
+                String nomCompte = spinnerNomCompteVar.getSelectedItem().toString();
+                Compte c = lesComptes.get(nomCompte);
+                c.TransfereSolde(Double.parseDouble(String.valueOf(argentdonner.getText())));
+                champSoldeVar.setText(df.format(c.getSolde()));
 
-
-
+                argentdonner.setText("");
+            } else if (v == boutonEnvoyerVar && argentdonner.getText().toString().trim().isEmpty()) {
+                // Affichage d'un toast simple avec un message court
+                Toast.makeText(Annexe2.this, "Argent a donner vide", Toast.LENGTH_SHORT).show();
+            }
         }
-
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
             String nomCompte = choix.get(pos);
-            champSoldeVar.setText(nomCompte);
-
-//            // autre facon
-//            TextView temp = (TextView) view;
-//            String nomCompte2 = temp.getText().toString();
+            Compte c = lesComptes.get(nomCompte);
+            champSoldeVar.setText(df.format(c.getSolde()));
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
+            champSoldeVar.setText("");
 
         }
+
     }
-
-
 }
+
