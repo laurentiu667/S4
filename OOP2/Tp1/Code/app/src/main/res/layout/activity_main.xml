@@ -14,6 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="#604c4c"
             android:orientation="horizontal">
 
             <TextView
@@ -21,11 +22,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/poppins_thin"
+
+                android:background="#604c4c"
                 android:gravity="center"
                 android:text="Home"
                 android:textColor="#000000"
-
                 android:textFontWeight="900"
                 android:textSize="34sp"
                 android:textStyle="bold" />
@@ -70,7 +71,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:fontFamily="@font/amaranth"
+
                             android:gravity="center"
                             android:text="Café filtre"
                             android:textAllCaps="true"
@@ -91,23 +92,23 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
-                            android:scaleType="centerInside"
                             android:backgroundTint="#00FFFFFF"
+                            android:scaleType="centerInside"
                             app:srcCompat="@drawable/americano" />
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:textFontWeight="900"
-                            android:textStyle="bold"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:fontFamily="@font/amaranth"
+
                             android:gravity="center"
                             android:text="Americano"
                             android:textAllCaps="true"
-                            android:textColor="#000000" />
+                            android:textColor="#000000"
+                            android:textFontWeight="900"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -135,8 +136,8 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
-                            android:scaleType="centerInside"
                             android:backgroundTint="#00FFFFFF"
+                            android:scaleType="centerInside"
                             app:srcCompat="@drawable/cafe_glace" />
 
                         <TextView
@@ -145,13 +146,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+
                             android:gravity="center"
-                            android:fontFamily="@font/amaranth"
                             android:text="Café glacé"
                             android:textAllCaps="true"
+                            android:textColor="#000000"
                             android:textFontWeight="900"
-                            android:textStyle="bold"
-                            android:textColor="#000000" />
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -166,8 +167,8 @@
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center_horizontal"
-                            android:scaleType="centerInside"
                             android:backgroundTint="#00FFFFFF"
+                            android:scaleType="centerInside"
                             app:srcCompat="@drawable/latte" />
 
                         <TextView
@@ -176,13 +177,13 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+
                             android:gravity="center"
-                            android:textFontWeight="900"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/amaranth"
                             android:text="latté"
                             android:textAllCaps="true"
-                            android:textColor="#000000" />
+                            android:textColor="#000000"
+                            android:textFontWeight="900"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </TableRow>
@@ -235,6 +236,17 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing"
+                android:textColor="#0B421A"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -245,13 +257,80 @@
                     android:id="@+id/button18"
                     android:layout_width="wrap_content"
                     android:layout_height="70dp"
-                    android:layout_weight="1"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
                     android:backgroundTint="#00704A"
                     android:text="Ajouter" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#fffcfc"
+            android:orientation="horizontal"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:text="Total"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="right|center_horizontal"
+                android:text="0.00$"
+                android:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="#00704A"
+                android:text="Effacer"
+                app:cornerRadius="35dp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="#00704A"
+                android:text="Commander"
+                app:cornerRadius="35dp" />
+
         </LinearLayout>
 
     </LinearLayout>
