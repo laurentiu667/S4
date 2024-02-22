@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -14,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
             android:background="#604c4c"
             android:orientation="horizontal">
 
@@ -56,14 +58,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButton3"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
-                            app:srcCompat="@drawable/americano" />
+                            app:srcCompat="@drawable/americano"/>
 
                         <TextView
                             android:id="@+id/textView"
@@ -87,14 +89,14 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButton4"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
                             android:layout_gravity="center"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
-                            app:srcCompat="@drawable/americano" />
+                            app:srcCompat="@drawable/cafe_filtre" />
 
                         <TextView
                             android:id="@+id/textView2"
@@ -131,7 +133,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButton5"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
@@ -162,7 +164,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/imageButton6"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
@@ -198,42 +200,42 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/button10"
+                <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#00704A"
-                    android:text="Petit"
-                    app:cornerRadius="35dp" />
+                    android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/button15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#00704A"
-                    android:text="Moyen"
-                    app:cornerRadius="35dp" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/button10"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00704A"
+                        android:text="Petit"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
 
-                <Button
-                    android:id="@+id/button16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#00704A"
-                    android:text="Grand"
-                    app:cornerRadius="35dp" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/button15"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00704A"
+                        android:text="Moyen"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/button16"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#00704A"
+                        android:text="Grand"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF" />
+
+                </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
 
             <TextView
@@ -261,7 +263,9 @@
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
                     android:backgroundTint="#00704A"
-                    android:text="Ajouter" />
+                    android:enabled="false"
+                    android:text="Ajouter"
+                    android:textColor="#FFFFFF" />
             </LinearLayout>
         </LinearLayout>
 
@@ -335,4 +339,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
