@@ -6,9 +6,10 @@ public class CafeGlace extends Cafe {
     static final int calorieM = calorieP + 2;
     static final int calorieG = calorieP * 2;
 
-
-    public CafeGlace() {
-        super("Glace", prix, calorieP);
+    static String taille;
+    public CafeGlace(String taille) {
+        super("Glace", calculerPrix(taille), calculerCalorie(taille));
+        this.taille = taille;
     }
 
     private static double calculerPrix(String taille) {

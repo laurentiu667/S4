@@ -5,10 +5,11 @@ public class CafeAmericano extends Cafe {
     static final int calorieP = 9;
     static final int calorieM = calorieP + 2;
     static final int calorieG = calorieP * 2;
+    static String taille;
 
-
-    public CafeAmericano() {
-        super("Americano", prix, calorieP);
+    public CafeAmericano(String taille) {
+        super("Americano", calculerPrix(taille), calculerCalorie(taille));
+        this.taille = taille;
     }
 
     private static double calculerPrix(String taille) {

@@ -5,13 +5,15 @@ public class CafeFiltre extends Cafe {
     static final int calorieP = 5;
     static final int calorieM = 7;
     static final int calorieG = 10;
+    static String taille;
 
 
-    public CafeFiltre() {
-        super("Filtre", prix, calorieP);
+    public CafeFiltre(String taille) {
+        super("Filtre", calculerPrix(taille), calculerCalorie(taille));
+        this.taille = taille;
     }
 
-    private static double calculerPrix(String taille) {
+    protected static double calculerPrix(String taille) {
         switch (taille) {
             case "petit":
                 return prix;
@@ -23,7 +25,7 @@ public class CafeFiltre extends Cafe {
                 return 0;
         }
     }
-    private static int calculerCalorie(String taille) {
+    protected static int calculerCalorie(String taille) {
         switch (taille) {
             case "petit":
                 return calorieP;
@@ -35,4 +37,5 @@ public class CafeFiltre extends Cafe {
                 return 0;
         }
     }
+
 }
