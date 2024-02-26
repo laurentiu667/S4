@@ -1,34 +1,38 @@
 package com.example.tp1_laurentiu_dilion;
 
 import java.util.Hashtable;
+import java.util.Set;
 
 public class ListeProduits {
 
     private final String[] taille = {"petit", "moyen", "grand"};
 
     private Hashtable<String, Cafe> liste;
+    private Set<String> ensCles;
+
+    Commande commande = new Commande();
 
     public ListeProduits ()
     {
         liste = new Hashtable();
-        liste.put("Café filtre Petit", new CafeFiltre(taille[0]));
-        liste.put("Café filtre Moyen", new CafeFiltre(taille[1]));
-        liste.put("Café filtre Grand", new CafeFiltre(taille[2]));
-        liste.put("Americano Petit", new CafeAmericano(taille[0]));
-        liste.put("Americano Moyen", new CafeAmericano(taille[1]));
-        liste.put("Americano Grand", new CafeAmericano(taille[2]));
-        liste.put("Café glacé Petit", new CafeGlace(taille[0]));
-        liste.put("Café glacé Moyen", new CafeGlace(taille[1]));
-        liste.put("Café glacé Grand", new CafeGlace(taille[2]));
-        liste.put("Latté Petit", new CafeLatte(taille[0]));
-        liste.put("Latté Moyen", new CafeLatte(taille[1]));
-        liste.put("Latté Grand", new CafeLatte(taille[2]));
+        liste.put("filtre petit", new CafeFiltre(taille[0]));
+        liste.put("filtre moyen", new CafeFiltre(taille[1]));
+        liste.put("filtre grand", new CafeFiltre(taille[2]));
+        liste.put("americano petit", new CafeAmericano(taille[0]));
+        liste.put("americano moyen", new CafeAmericano(taille[1]));
+        liste.put("americano grand", new CafeAmericano(taille[2]));
+        liste.put("glace petit", new CafeGlace(taille[0]));
+        liste.put("glace moyen", new CafeGlace(taille[1]));
+        liste.put("glace grand", new CafeGlace(taille[2]));
+        liste.put("latte petit", new CafeLatte(taille[0]));
+        liste.put("latte moyen", new CafeLatte(taille[1]));
+
+
+        ensCles = liste.keySet();
     }
 
-    public Cafe getCafe(String nom)
-    {
+    public Cafe getCafe(String nom) {
         return liste.get(nom);
     }
-
-
 }
+

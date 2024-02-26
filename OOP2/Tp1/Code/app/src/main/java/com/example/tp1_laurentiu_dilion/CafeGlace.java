@@ -17,7 +17,7 @@ public class CafeGlace extends Cafe {
             case "petit":
                 return prix;
             case "moyen":
-                return prix + prix * 5 / 3;
+                return prix * 5 / 3;
             case "grand":
                 return prix * 2.2;
             default:

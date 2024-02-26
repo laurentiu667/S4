@@ -17,11 +17,26 @@ public class Commande {
         boissons.add(produit);
         total += produit.getPrix();
     }
+    public void reset(){
+        boissons.clear();
+        total = 0;
+    }
 
 
     public double getTotal() {
         return total;
     }
+    public double ajouterTaxes(){
+        return total * 0.14975;
+    }
+
+    public double totalTaxes(){
+        return getTotal() + ajouterTaxes();
+    }
+    public void setBoissons(Vector<Cafe> boissons) {
+        this.boissons = boissons;
+    }
+
 
     public Vector<Cafe> getBoissons() {
         return boissons;

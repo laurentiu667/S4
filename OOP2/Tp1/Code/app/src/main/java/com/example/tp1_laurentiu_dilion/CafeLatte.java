@@ -15,7 +15,7 @@ public class CafeLatte extends Cafe {
             case "petit":
                 return prix;
             case "moyen":
-                return prix + prix * 5 / 3;
+                return prix * 5 / 3;
             default:
                 return 0;
         }
