@@ -10,8 +10,6 @@ public class ListeProduits {
     private Hashtable<String, Cafe> liste;
     private Set<String> ensCles;
 
-    Commande commande = new Commande();
-
     public ListeProduits ()
     {
         liste = new Hashtable();
