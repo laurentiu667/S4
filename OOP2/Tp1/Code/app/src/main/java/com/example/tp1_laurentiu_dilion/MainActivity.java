@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialization of variables
+        // variables
         filtre = findViewById(R.id.filtre);
         americano = findViewById(R.id.americano);
         glace = findViewById(R.id.glace);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         ImageCaisseCaffe = findViewById(R.id.ImageCaisseCaffe);
         totalargent = findViewById(R.id.totalargent);
 
-        // Adding listeners
+        // listeners
         ec = new Ecouteur();
         filtre.setOnClickListener(ec);
         americano.setOnClickListener(ec);
@@ -69,9 +69,7 @@ public class MainActivity extends AppCompatActivity {
         passerCommande.setOnClickListener(ec);
         ajouterCaisse.setEnabled(false);
     }
-    private void retirerChipIcon(Chip chip) {
-        chip.setChipIcon(null);
-    }
+
     private Cafe ajouterProduit(String nomProduit, String tailleProduit) {
         DecimalFormat df = new DecimalFormat("#.##$");
         ListeProduits listeProduits = new ListeProduits();
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 String cle = nomProduit + " " + tailleProduit;
                 Cafe cafeChoisi = listeProduits.getCafe(cle);
                 String nombreFormate = df.format(cafeChoisi.getPrix());
-                detailcommande.setText("Café " + nomProduit + " " + cafeChoisi.getCalorie() + " cal " + nombreFormate );
+                detailcommande.setText("Café " + nomProduit + " " + cafeChoisi.getCalorie() + " cal " + nombreFormate);
                 return cafeChoisi;
             }
         }
@@ -96,61 +94,22 @@ public class MainActivity extends AppCompatActivity {
 
         String tailleProduit = "petit";
         Commande commande = new Commande();
-        ImageView enAttente = new ImageView(MainActivity.this);
+        ImageView enAttente = null;
         @Override
         public void onClick(View v) {
 
-            if (v.getId() == R.id.filtre) {
-                nomProduit = "filtre";
-                if (v instanceof ImageView) {
-                    Drawable drawable = ((ImageView) v).getDrawable();
-                    if (drawable != null) {
+            // Recuperer le nom de l image pour chaque
+            if (v instanceof ImageView){
+                nomProduit = v.getTag().toString();
+                Drawable drawable = ((ImageView) v).getDrawable();
+                enAttente = new ImageView(MainActivity.this);
 
-                        enAttente.setImageDrawable(drawable);
-                    }
+                if (drawable != null) {
+                    enAttente.setImageDrawable(drawable);
                 }
-            } else if (v.getId() == R.id.americano) {
-                nomProduit = "americano";
-                if (v instanceof ImageView) {
-                    Drawable drawable = ((ImageView) v).getDrawable();
-                    if (drawable != null) {
-
-                        enAttente.setImageDrawable(drawable);
-                    }
-                }
-            } else if (v.getId() == R.id.glace) {
-                nomProduit = "glace";
-                if (v instanceof ImageView) {
-                    Drawable drawable = ((ImageView) v).getDrawable();
-                    if (drawable != null) {
-
-                        enAttente.setImageDrawable(drawable);
-                    }
-                }
-            } else if (v.getId() == R.id.latte) {
-                nomProduit = "latte";
-                if (v instanceof ImageView) {
-                    Drawable drawable = ((ImageView) v).getDrawable();
-                    if (drawable != null) {
-
-                        enAttente.setImageDrawable(drawable);
-                    }
-                }
-            } else if (v.getId() == R.id.petit) {
-                petit.setChipIconResource(R.drawable.crochet);
-                retirerChipIcon(moyen);
-                retirerChipIcon(grand);
-                tailleProduit = "petit";
-            } else if (v.getId() == R.id.moyen) {
-                moyen.setChipIconResource(R.drawable.crochet);
-                retirerChipIcon(petit);
-                retirerChipIcon(grand);
-                tailleProduit = "moyen";
-            } else if (v.getId() == R.id.grand) {
-                grand.setChipIconResource(R.drawable.crochet);
-                retirerChipIcon(petit);
-                retirerChipIcon(moyen);
-                tailleProduit = "grand";
+            } else if (v instanceof Chip) {
+                ((Chip) v).setChipIconResource(R.drawable.crochet);
+                tailleProduit =v.getTag().toString();
             }
 
 
@@ -158,11 +117,17 @@ public class MainActivity extends AppCompatActivity {
             if (v.getId() == R.id.ajouterCaisse) {
                 commande.ajouter_boisson(cafe);
                 totalargent.setText(String.format("%.2f $", commande.totalTaxes()));
-
                 petit.setChipIconResource(R.drawable.crochet);
-                retirerChipIcon(moyen);
-                retirerChipIcon(grand);
                 tailleProduit = "petit";
+
+
+                LinearLayout layout = new LinearLayout(MainActivity.this);
+
+                layout.addView(enAttente);
+
+                layout.setLayoutParams();
+
+                ImageCaisseCaffe.addView(layout);
 
             }
             else if (v.getId() == R.id.effacerCaisse) {
@@ -172,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 ajouterCaisse.setEnabled(false);
                 ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
                 petit.setChipIconResource(R.drawable.crochet);
-                retirerChipIcon(moyen);
-                retirerChipIcon(grand);
+
                 tailleProduit = "petit";
             } else if (v.getId() == R.id.passerCommande) {
 

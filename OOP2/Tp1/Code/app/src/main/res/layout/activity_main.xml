@@ -66,6 +66,7 @@
                             android:layout_gravity="center"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
+                            android:tag="filtre"
                             app:srcCompat="@drawable/americano" />
 
                         <TextView
@@ -97,6 +98,7 @@
                             android:layout_gravity="center"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
+                            android:tag="americano"
                             app:srcCompat="@drawable/cafe_filtre" />
 
                         <TextView
@@ -141,6 +143,7 @@
                             android:layout_gravity="center"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
+                            android:tag="glace"
                             app:srcCompat="@drawable/cafe_glace" />
 
                         <TextView
@@ -172,6 +175,7 @@
                             android:layout_gravity="center_horizontal"
                             android:backgroundTint="#00FFFFFF"
                             android:scaleType="centerInside"
+                            android:tag="latte"
                             app:srcCompat="@drawable/latte" />
 
                         <TextView
@@ -218,6 +222,7 @@
                         android:layout_height="wrap_content"
 
                         android:checkable="false"
+                        android:tag="petit"
                         android:text="Petit"
                         android:textColor="#FFFFFF"
                         app:chipBackgroundColor="#00704A" />
@@ -229,6 +234,7 @@
                         android:layout_height="wrap_content"
 
                         android:checkable="false"
+                        android:tag="moyen"
                         android:text="Moyen"
                         android:textColor="#FFFFFF"
                         app:chipBackgroundColor="#00704A" />
@@ -238,6 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checkable="false"
+                        android:tag="grand"
                         android:text="Grand"
                         android:textColor="#FFFFFF"
                         app:chipBackgroundColor="#00704A" />
