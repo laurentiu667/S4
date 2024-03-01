@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         passerCommande.setOnClickListener(ec);
         ajouterCaisse.setEnabled(false);
     }
-
     private Cafe ajouterProduit(String nomProduit, String tailleProduit) {
         DecimalFormat df = new DecimalFormat("#.##$");
         ListeProduits listeProduits = new ListeProduits();
@@ -75,40 +74,38 @@ public class MainActivity extends AppCompatActivity {
                 return cafeChoisi;
             }
         }
-
         return null;
     }
-
     private class Ecouteur implements View.OnClickListener {
         String nomProduit = null;
         String tailleProduit = "petit";
         Commande commande = new Commande();
         ImageView enAttente = null;
-
         @Override
         public void onClick(View v) {
+
+
             // Recuperer le nom de l'image pour chaque
             if (v instanceof ImageView) {
                 nomProduit = v.getTag().toString();
                 Drawable drawable = ((ImageView) v).getDrawable();
                 enAttente = new ImageView(MainActivity.this);
-                if (drawable != null) {
-                    enAttente.setImageDrawable(drawable);
-                }
+
+                enAttente.setImageDrawable(drawable);
+
             } else if (v instanceof Chip) {
                 ((Chip) v).setChipIconResource(R.drawable.crochet);
                 tailleProduit = v.getTag().toString();
             }
             // AjouterProduit retourne le bon café grâce à la clé de la hashtable et la stocke dans une variable cafe
             Cafe cafe = ajouterProduit(nomProduit, tailleProduit);
-
             if (v.getId() == R.id.ajouterCaisse) {
                 // Ajouter le type de café ( produit ) pour calculer son prix + taxes + calories
                 commande.ajouter_boisson(cafe);
                 totalargent.setText(String.format("%.2f $", commande.totalTaxes()));
 
                 // Reinitialisation de la taille du café
-                petit.setChipIconResource(R.drawable.crochet);
+                petit.setChecked(true);
                 tailleProduit = "petit";
 
                 // Ajout du café ( image ) dans la caisse
@@ -120,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Ajoutez l'image au LinearLayout parent
                 ImageCaisseCaffe.addView(img);
-
+                ajouterProduit(nomProduit, tailleProduit);
 
             } else if (v.getId() == R.id.effacerCaisse) {
                 commande.reset();
@@ -131,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
                 petit.setChipIconResource(R.drawable.crochet);
                 ImageCaisseCaffe.removeAllViews();
+                petit.setChecked(true);
                 tailleProduit = "petit";
             } else if (v.getId() == R.id.passerCommande) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -139,9 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
 
-            if (v.getId() != R.id.effacerCaisse) {
-                ajouterProduit(nomProduit, tailleProduit);
-            }
         }
     }
 }

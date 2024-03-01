@@ -11,10 +11,6 @@ public class Cafe {
         this.calorie = calorie;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
     public double getPrix() {
         return prix;
     }

@@ -33,12 +33,5 @@ public class Commande {
     public double totalTaxes(){
         return getTotal() + ajouterTaxes();
     }
-    public void setBoissons(Vector<Cafe> boissons) {
-        this.boissons = boissons;
-    }
 
-
-    public Vector<Cafe> getBoissons() {
-        return boissons;
-    }
 }

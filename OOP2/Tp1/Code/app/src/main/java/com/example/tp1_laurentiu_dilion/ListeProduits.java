@@ -24,7 +24,7 @@ public class ListeProduits {
         liste.put("glace grand", new CafeGlace(taille[2]));
         liste.put("latte petit", new CafeLatte(taille[0]));
         liste.put("latte moyen", new CafeLatte(taille[1]));
-
+        liste.put("latte grand", new CafeLatte(taille[2]));
 
         ensCles = liste.keySet();
     }

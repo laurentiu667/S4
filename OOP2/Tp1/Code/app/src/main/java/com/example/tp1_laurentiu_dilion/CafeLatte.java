@@ -4,6 +4,7 @@ public class CafeLatte extends Cafe {
     static final double prix = 4;
     static final int calorieP = 125;
     static final int calorieM = calorieP * 5/3;
+    static final int calorieG = calorieP * 2;
     static String taille;
     public CafeLatte(String taille) {
         super("Latte", calculerPrix(taille), calculerCalorie(taille));
@@ -16,6 +17,8 @@ public class CafeLatte extends Cafe {
                 return prix;
             case "moyen":
                 return prix * 5 / 3;
+            case "grand":
+                return prix * 2.5;
             default:
                 return 0;
         }
@@ -26,6 +29,8 @@ public class CafeLatte extends Cafe {
                 return calorieP;
             case "moyen":
                 return calorieM;
+            case "grand":
+                return calorieG;
             default:
                 return 0;
         }
