@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
                 petit.setChecked(true);
                 tailleProduit = "petit";
             } else if (v.getId() == R.id.passerCommande) {
+                ImageCaisseCaffe.removeAllViews();
+                ajouterCaisse.setEnabled(false);
+                ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Commande envoyée");
                 builder.setMessage("paiement de " + String.format("%.2f $", commande.getTotal()) + " en cours");
