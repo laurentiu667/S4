@@ -1,0 +1,4 @@
+
+Quand je clique sur une source, un événement objet est lancé, cet objet sera capté par un écouteur
+
+Source : Composante avec laquelle l'usager interagir

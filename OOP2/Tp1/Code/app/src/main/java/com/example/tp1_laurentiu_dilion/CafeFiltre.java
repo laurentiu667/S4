@@ -4,7 +4,7 @@ public class CafeFiltre extends Cafe {
     static final double prix = 1.8;
     static final int calorieP = 5;
     static final int calorieM = 7;
-    static final int calorieG = 10;
+    static final int calorieG = calorieP * 2;
     static String taille;
 
 
@@ -20,7 +20,7 @@ public class CafeFiltre extends Cafe {
             case "moyen":
                 return prix * 5 / 3;
             case "grand":
-                return prix * 2;
+                return prix * 2.2;
             default:
                 return 0;
         }

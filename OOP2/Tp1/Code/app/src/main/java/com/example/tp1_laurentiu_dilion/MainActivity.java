@@ -81,20 +81,17 @@ public class MainActivity extends AppCompatActivity {
         String tailleProduit = "petit";
         Commande commande = new Commande();
         ImageView enAttente = null;
+        int taille = 150;
         @Override
         public void onClick(View v) {
-
-
             // Recuperer le nom de l'image pour chaque
             if (v instanceof ImageView) {
                 nomProduit = v.getTag().toString();
                 Drawable drawable = ((ImageView) v).getDrawable();
                 enAttente = new ImageView(MainActivity.this);
-
                 enAttente.setImageDrawable(drawable);
-
             } else if (v instanceof Chip) {
-                ((Chip) v).setChipIconResource(R.drawable.crochet);
+                ((Chip) v).setChipIconResource(R.drawable.check);
                 tailleProduit = v.getTag().toString();
             }
             // AjouterProduit retourne le bon café grâce à la clé de la hashtable et la stocke dans une variable cafe
@@ -109,34 +106,44 @@ public class MainActivity extends AppCompatActivity {
                 tailleProduit = "petit";
 
                 // Ajout du café ( image ) dans la caisse
-
                 ImageView img = new ImageView(MainActivity.this);
                 img.setImageDrawable(enAttente.getDrawable());
-                img.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
+                img.setLayoutParams(new LinearLayout.LayoutParams(taille, taille));
                 img.setPadding(10, 10, 10, 10);
 
+                if (ImageCaisseCaffe.getChildCount() < 16) {
+                    // Changer la taille de l'image
+                    for (int i = 0; i < ImageCaisseCaffe.getChildCount(); i++) {
+                        ImageView imgCaisse = (ImageView) ImageCaisseCaffe.getChildAt(i);
+                        imgCaisse.setLayoutParams(new LinearLayout.LayoutParams(taille, taille));
+                    }
+                    taille -= 6;
+                }
                 // Ajoutez l'image au LinearLayout parent
                 ImageCaisseCaffe.addView(img);
                 ajouterProduit(nomProduit, tailleProduit);
 
             } else if (v.getId() == R.id.effacerCaisse) {
-                commande.reset();
-
-                totalargent.setText(commande.getTotal() + " $");
-                detailcommande.setText("Détails de la commande");
-                ajouterCaisse.setEnabled(false);
-                ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
-                petit.setChipIconResource(R.drawable.crochet);
-                ImageCaisseCaffe.removeAllViews();
-                petit.setChecked(true);
-                tailleProduit = "petit";
+                reset();
             } else if (v.getId() == R.id.passerCommande) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Commande envoyée");
-                builder.setMessage("paiement de " + String.format("%.2f $", commande.getTotal()) + " en cours");
+                builder.setMessage("paiement de " + String.format("%.2f $", commande.totalTaxes()) + " en cours");
                 builder.show();
+                reset();
             }
-
+        }
+        // Reinitialisation de la commande
+        public void reset() {
+            commande.reset();
+            totalargent.setText(commande.getTotal() + " $");
+            detailcommande.setText("Détails de la commande");
+            ajouterCaisse.setEnabled(false);
+            ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
+            petit.setChipIconResource(R.drawable.check);
+            ImageCaisseCaffe.removeAllViews();
+            petit.setChecked(true);
+            tailleProduit = "petit";
         }
     }
 }

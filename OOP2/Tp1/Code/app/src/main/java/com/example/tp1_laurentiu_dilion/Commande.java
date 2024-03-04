@@ -7,7 +7,6 @@ public class Commande {
     private Vector<Cafe> boissons = new Vector();
     private double total;
 
-
     public Commande() {
         boissons = new Vector();
         total = 0;
@@ -21,7 +20,6 @@ public class Commande {
         boissons.clear();
         total = 0;
     }
-
 
     public double getTotal() {
         return total;
