@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Reinitialisation de la commande
         public void reset() {
+            taille = 150;
             commande.reset();
             totalargent.setText(commande.getTotal() + " $");
             detailcommande.setText("Détails de la commande");
