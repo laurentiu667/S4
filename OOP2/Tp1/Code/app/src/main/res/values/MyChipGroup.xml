@@ -2,7 +2,7 @@
 <!-- res/values/styles.xml -->
 <resources>
     <style name="MyChipGroup" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="checkedIcon">@drawable/check</item>
+        <item name="checkedIcon">@drawable/crochet</item>
         <item name="checkedIconVisible">true</item>
         <item name="android:textColor">@color/color_chip_text</item>
         <item name="chipBackgroundColor">@color/color_chip_background</item>

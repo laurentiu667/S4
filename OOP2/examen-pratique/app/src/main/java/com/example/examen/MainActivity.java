@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
     Groupe g = new Groupe();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         matriculemain = findViewById(R.id.matricule);
@@ -67,43 +65,41 @@ public class MainActivity extends AppCompatActivity {
         double moyenne = 0;
         @Override
         public void onClick(View v) {
-
-            if (v == buttonreussi){
-
+            if (v == buttonreussi) {
                 clicked++;
-
                 nmb_lancer_reussi.setText(String.valueOf(clicked));
+            } else if (v == enregistrement && matriculemain.length() >= 7) {
+                Evaluation e = new Evaluation(matriculemain.getText().toString(), clicked, spinner.getSelectedItem().toString());
+                e.setNbr_service_reussi(Integer.valueOf(nmb_lancer_reussi.getText().toString()));
+                g.ajouter_evaluation(e);
+                Toast.makeText(MainActivity.this, "L'évaluation à été enregistrer", Toast.LENGTH_SHORT).show();
+                resetFields();
 
-            } else if (v == enregistrement){
-
-                if(matriculemain.length() < 7){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setTitle("erreur");
-                    builder.setMessage("il te faut 7 chiffre");
-                    builder.show();
-                    matriculemain.setText("");
-                } else {
-                    Evaluation e = new Evaluation(matriculemain.getText().toString(), clicked, spinner.getSelectedItem().toString());
-                    e.setNbr_service_reussi(Integer.valueOf(nmb_lancer_reussi.getText().toString()));
-                    g.ajouter_evaluation(e);
-                    Toast.makeText(MainActivity.this, "L'évaluation à été enregistrer", Toast.LENGTH_SHORT).show();
-                    matriculemain.setText("");
-                    nmb_lancer_reussi.setText("");
-
-
-                    nbr_etudiant++;
-                    etudiant_evaluer.setText(String.valueOf(nbr_etudiant));
-                    moyenne = g.moyenne_nbr_services(nbr_etudiant);
-                    moyennetoutlemonde.setText(String.valueOf(moyenne));
-                    meilleuretudiant.setText(g.meilleur_matricule_service());
-
-                }
-
+                nbr_etudiant++;
+                updateUI();
+            } else {
+                showErrorDialog();
             }
+        }
 
+        private void showErrorDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("erreur");
+            builder.setMessage("il te faut 7 chiffre");
+            builder.show();
+            matriculemain.setText("");
+        }
 
+        private void resetFields() {
+            matriculemain.setText("");
+            nmb_lancer_reussi.setText("");
+        }
 
-
+        private void updateUI() {
+            etudiant_evaluer.setText(String.valueOf(nbr_etudiant));
+            moyenne = g.moyenne_nbr_services(nbr_etudiant);
+            moyennetoutlemonde.setText(String.valueOf(moyenne));
+            meilleuretudiant.setText(g.meilleur_matricule_service());
         }
 
 

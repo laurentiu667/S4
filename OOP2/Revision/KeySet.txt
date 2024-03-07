@@ -1,0 +1,27 @@
+keySet() est une méthode de la classe Hashtable (et également de la plupart des implémentations de l'interface Map en Java) qui renvoie un ensemble (instance de Set) contenant toutes les clés présentes dans la Hashtable. Cet ensemble peut être utilisé pour itérer sur toutes les clés de la Hashtable ou pour effectuer diverses opérations basées sur les clés.
+
+Voici quelques utilisations courantes de keySet() :
+
+    Itération sur les clés : Vous pouvez utiliser keySet() pour itérer sur toutes les clés de la Hashtable. Par exemple :
+
+java
+
+Hashtable<String, Integer> hashtable = new Hashtable<>();
+// Ajouter des éléments à la hashtable...
+Set<String> keys = hashtable.keySet();
+for (String key : keys) {
+    System.out.println("Clé : " + key + ", Valeur : " + hashtable.get(key));
+}
+
+    Vérification de l'existence d'une clé : Vous pouvez utiliser keySet() en combinaison avec la méthode contains() pour vérifier si une clé spécifique existe dans la Hashtable :
+
+java
+
+Hashtable<String, Integer> hashtable = new Hashtable<>();
+// Ajouter des éléments à la hashtable...
+Set<String> keys = hashtable.keySet();
+if (keys.contains("clé")) {
+    System.out.println("La clé existe dans la Hashtable.");
+} else {
+    System.out.println("La clé n'existe pas dans la Hashtable.");
+}

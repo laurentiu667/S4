@@ -8,7 +8,6 @@ public class ListeProduits {
     private final String[] taille = {"petit", "moyen", "grand"};
 
     private Hashtable<String, Cafe> liste;
-    private Set<String> ensCles;
 
     public ListeProduits ()
     {
@@ -25,8 +24,6 @@ public class ListeProduits {
         liste.put("latte petit", new CafeLatte(taille[0]));
         liste.put("latte moyen", new CafeLatte(taille[1]));
         liste.put("latte grand", new CafeLatte(taille[2]));
-
-        ensCles = liste.keySet();
     }
 
     public Cafe getCafe(String nom) {

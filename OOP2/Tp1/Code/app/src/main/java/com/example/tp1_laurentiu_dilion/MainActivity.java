@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 enAttente = new ImageView(MainActivity.this);
                 enAttente.setImageDrawable(drawable);
             } else if (v instanceof Chip) {
-                ((Chip) v).setChipIconResource(R.drawable.check);
+                ((Chip) v).setChipIconResource(R.drawable.crochet);
                 tailleProduit = v.getTag().toString();
             }
             // AjouterProduit retourne le bon café grâce à la clé de la hashtable et la stocke dans une variable cafe
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             detailcommande.setText("Détails de la commande");
             ajouterCaisse.setEnabled(false);
             ajouterCaisse.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#96B1A8")));
-            petit.setChipIconResource(R.drawable.check);
+            petit.setChipIconResource(R.drawable.crochet);
             ImageCaisseCaffe.removeAllViews();
             petit.setChecked(true);
             tailleProduit = "petit";
