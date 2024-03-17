@@ -60,12 +60,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            canvas.drawCircle(200,200,100, crayon);
 
-            crayon.setColor(Color.BLUE);
-            crayon.setStyle(Paint.Style.FILL);
-
-            canvas.drawCircle(450,200,100, crayon);
 
             crayon.setColor(Color.BLUE);
             crayon.setStyle(Paint.Style.FILL);
