@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
     ConstraintLayout parent;
     Surface surface;
-    Paint paint;
     float startX, startY, endX, endY;
 
     TextView textView;
     TextView textView2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        // Création du LinearLayout et définition du fond avec le drawable
         LinearLayout info = new LinearLayout(this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         info.setLayoutParams(params);
         info.setOrientation(LinearLayout.VERTICAL);
-        info.setBackground(gradientDrawable); // Utilisation du drawable pour le fond
+        info.setBackground(gradientDrawable);
         info.setForegroundGravity(Gravity.CENTER);
 
         textView = new TextView(this);
@@ -63,27 +63,24 @@ public class MainActivity extends AppCompatActivity {
         parent.addView(surface);
         parent.addView(info);
 
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(15);
+
+
+        Ecouteur ec = new Ecouteur();
+        surface.setOnTouchListener(ec);
     }
 
-    private class Surface extends View implements View.OnTouchListener {
-        public Surface(Context context) {
-            super(context);
-            setOnTouchListener(this);
-        }
+    private class Ecouteur implements View.OnTouchListener {
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
            if (event.getAction() == MotionEvent.ACTION_DOWN){
                startX = event.getX();
                startY = event.getY();
-               invalidate();
+               surface.invalidate();
            } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_MOVE){
                endX = event.getX();
                endY = event.getY();
-               invalidate();
+               surface.invalidate();
            }
 
             textView.setText(endX + " | " + endY);
@@ -91,6 +88,18 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+
+
+    }
+
+    private class Surface extends View{
+        Paint paint = new Paint();
+
+        public Surface(Context context){
+            super(context);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(15);
+        }
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
