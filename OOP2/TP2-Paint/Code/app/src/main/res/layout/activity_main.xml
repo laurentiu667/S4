@@ -27,6 +27,7 @@
             android:layout_height="wrap_content">
 
             <TableRow
+                android:id="@+id/tableCouleur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -179,12 +180,13 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:id="@+id/choixImage"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/crayon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -193,7 +195,7 @@
                     app:srcCompat="@drawable/crayon" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/trait"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -202,16 +204,17 @@
                     app:srcCompat="@drawable/largeur_trait" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/effacer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+
                     android:tag="effacer"
                     app:srcCompat="@drawable/efface" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/palette"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -220,7 +223,7 @@
                     app:srcCompat="@drawable/palette" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/pipelet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -229,7 +232,7 @@
                     app:srcCompat="@drawable/pipette" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/remplissage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -238,7 +241,7 @@
                     app:srcCompat="@drawable/remplir" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/rectangle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -247,7 +250,7 @@
                     app:srcCompat="@drawable/rectangle" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/triangle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -256,7 +259,7 @@
                     app:srcCompat="@drawable/triangle" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/cercle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -265,7 +268,7 @@
                     app:srcCompat="@drawable/cercle" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/enregistrer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
@@ -274,13 +277,21 @@
                     app:srcCompat="@drawable/enregistrer" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/redo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:tag="redo"
                     app:srcCompat="@drawable/redo" />
+
+                <ImageView
+                    android:id="@+id/undo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tag="undo"
+                    app:srcCompat="@drawable/undo" />
 
             </LinearLayout>
         </HorizontalScrollView>
