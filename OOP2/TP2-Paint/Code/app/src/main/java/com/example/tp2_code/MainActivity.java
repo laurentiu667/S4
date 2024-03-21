@@ -1,5 +1,6 @@
 package com.example.tp2_code;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.graphics.Path;
+import android.widget.SeekBar;
 import android.widget.TableRow;
 
 import java.sql.SQLOutput;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Ecouteur ec;
     ImageView effacer, crayon, trait, palette, pipelet, remplissage, rectangle, triangle, cercle, enregistrer, redo, undo;
     Paint paint;
+    String hexColor = "#000000";
+    int traitNombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private class Ecouteur implements View.OnTouchListener, View.OnClickListener {
         private boolean remplissageActive = false;
 
-        String hexColor = "#000000";
+
         @Override
         public void onClick(View v) {
             if (v instanceof Button){
@@ -97,9 +101,44 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "remplissage":
                     remplissageActive = true;
-                    surface.setBackgroundColor(Color.parseColor(hexColor));
 
                     break;
+                case "trait":
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                    SeekBar seekBar = new SeekBar(MainActivity.this);
+                    seekBar.setMax(50);
+                    seekBar.setProgress(5);
+                    builder.setView(seekBar);
+                    // mettre la valeur de la seekbar dans la variable traitNombre
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                            traitNombre = progress;
+                            paint.setStrokeWidth(traitNombre);
+                        }
+
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+
+                        }
+
+
+                    });
+
+                    builder.setTitle("Taille du trait");
+
+                    builder.setPositiveButton("Changer", null);
+                    builder.setNegativeButton("Annuler", null);
+                    builder.show();
+                    break;
+
             }
         }
 
@@ -110,35 +149,23 @@ public class MainActivity extends AppCompatActivity {
 
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    if (v instanceof Surface) {
-                        path.moveTo(x, y);
-                        return true;
-                    }
-                    break;
+                    path.moveTo(x, y);
+                    return true;
                 case MotionEvent.ACTION_MOVE:
-                    if (v instanceof Surface) {
-                        path.lineTo(x, y);
-                        if (remplissageActive) {
-                            surface.setBackgroundColor(Color.parseColor(hexColor));
-                        }
-                        surface.invalidate();
-                        return true;
-                    }
-                    break;
+                    path.lineTo(x, y);
+                    surface.invalidate();
+                    return true;
                 case MotionEvent.ACTION_UP:
-                    if (v instanceof Surface) {
-                        path.lineTo(x, y);
-                        surface.invalidate();
-                        if (remplissageActive) {
-                            remplissageActive = false;
-                        }
-                        return true;
+                    if (remplissageActive) {
+                        surface.setBackgroundColor(Color.parseColor(hexColor));
+                        remplissageActive = false;
                     }
-                    break;
-            }
 
+                    return true;
+            }
             return false;
         }
+
     }
 
 
@@ -148,8 +175,8 @@ public class MainActivity extends AppCompatActivity {
         public Surface(Context context) {
             super(context);
             paint = new Paint();
-            paint.setColor(Color.parseColor("#000000"));
-            paint.setStrokeWidth(300);
+            paint.setColor(Color.parseColor(hexColor));
+            paint.setStrokeWidth(traitNombre);
             paint.setStyle(Paint.Style.STROKE);
         }
 
