@@ -2,9 +2,11 @@ package com.example.tp2_code.Outils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 
 public class Rectangle extends Forme {
     private int x, y, x2, y2;
+
 
     public Rectangle(int couleur, int largeur, int x, int y, int x2, int y2) {
         super(couleur, largeur);
@@ -12,6 +14,7 @@ public class Rectangle extends Forme {
         this.y = y;
         this.x2 = x2;
         this.y2 = y2;
+
     }
 
     public void setCoordonnees(int x, int y, int x2, int y2) {

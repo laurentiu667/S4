@@ -20,6 +20,7 @@ import android.graphics.Path;
 import android.widget.SeekBar;
 import android.widget.TableRow;
 
+import com.example.tp2_code.Outils.Background;
 import com.example.tp2_code.Outils.Forme;
 import com.example.tp2_code.Outils.Ovale;
 import com.example.tp2_code.Outils.Rectangle;
@@ -37,9 +38,12 @@ public class MainActivity extends AppCompatActivity {
     Surface surface;
     String hexColor = "#000000";
     Forme forme = new Trait(Color.parseColor(hexColor), 5);
+
     Rectangle rectangle;
     Triangle triangle;
     Ovale ovale;
+
+    Background bg;
 
     Ecouteur ec;
     List<Forme> listeFormes = new ArrayList<>();
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ec = new Ecouteur();
         surface.setOnTouchListener(ec);
 
+
         for (int i = 0; i < couleur.getChildCount(); i++) {
             couleur.getChildAt(i).setOnClickListener(ec);
         }
@@ -77,25 +82,32 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+
             if (v instanceof Button) {
                 hexColor = v.getTag().toString();
             } else if (v instanceof ImageView) {
                 switch (v.getId()) {
+                    case R.id.remplissage:
+                        bg = new Background();
+                        bg.setHexColor(hexColor);
+
+                        break;
                     case R.id.crayon:
                         forme = new Trait(Color.parseColor(hexColor), 5);
+
                         break;
                     case R.id.rectangle:
                         forme = new Rectangle(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
-                        System.out.println("Rectangle");
                         break;
                     case R.id.triangle:
                         forme = new Triangle(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
-                        System.out.println("Triangle");
                         break;
                     case R.id.ovale:
                         forme = new Ovale(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
-                        System.out.println("Ovale");
                         break;
+
+
+
                 }
             }
         }
@@ -111,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
                     if (forme instanceof Trait) {
                         ((Trait) forme).move_to(x1, y1);
                         surface.invalidate();
+                    } else if (bg instanceof Background){
+                        bg.dessiner(surface);
                     }
 
                     return true;
@@ -129,10 +143,11 @@ public class MainActivity extends AppCompatActivity {
                     } else if (forme instanceof Ovale) {
                         ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
                     }
-                    listeFormes.add(forme);
+
                     surface.invalidate();
                     return true;
                 case MotionEvent.ACTION_UP:
+                    listeFormes.add(forme);
 
                     surface.invalidate();
 
