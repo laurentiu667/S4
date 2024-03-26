@@ -115,43 +115,50 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+
                     x1 = (int) event.getX();
                     y1 = (int) event.getY();
+
                     if (forme instanceof Trait) {
+                        forme = new Trait(Color.parseColor(hexColor), 5);
                         ((Trait) forme).move_to(x1, y1);
-                        surface.invalidate();
-                    } else if (bg instanceof Background){
+                    } else if (forme instanceof Rectangle) {
+                        forme = new Rectangle(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
+                    } else if (forme instanceof Triangle) {
+                        forme = new Triangle(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
+                    } else if (forme instanceof Ovale) {
+                        forme = new Ovale(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
+                    } else if (bg instanceof Background) {
                         bg.dessiner(surface);
+                        System.out.println("down");
                     }
+
+                    surface.invalidate();
 
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     x2 = (int) event.getX();
                     y2 = (int) event.getY();
+
                     if (forme instanceof Trait) {
                         ((Trait) forme).line_to(x2, y2);
-
                     } else if (forme instanceof Rectangle) {
                         ((Rectangle) forme).setCoordonnees(x1, y1, x2, y2);
-
                     } else if (forme instanceof Triangle) {
                         ((Triangle) forme).setCoordonnees(x1, y1, x2, y2);
-
                     } else if (forme instanceof Ovale) {
                         ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
                     }
 
                     surface.invalidate();
+
                     return true;
                 case MotionEvent.ACTION_UP:
+
                     listeFormes.add(forme);
-
                     surface.invalidate();
-
-
 
                     return true;
             }
@@ -172,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
             // si elle existe tu la dessine
             for (Forme forme : listeFormes) {
                 forme.dessiner(canvas);
+                System.out.println(listeFormes.size());
             }
             // sinon tu dessine une nouvelle forme
             if (forme != null) {
