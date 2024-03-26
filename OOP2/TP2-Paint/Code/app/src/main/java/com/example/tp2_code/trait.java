@@ -30,6 +30,8 @@ public class trait extends Dialog {
         setContentView(R.layout.activity_trait);
 
         seekBar = findViewById(R.id.seekBar);
+        seekBar.setMax(100);
+
         tailleTrait = findViewById(R.id.taille_int);
         confirmerTrait = findViewById(R.id.confirmer_taille);
         ec = new Ecouteur();
@@ -39,29 +41,19 @@ public class trait extends Dialog {
 
 
     }
+
     private class Ecouteur implements View.OnClickListener {
+
         @Override
         public void onClick(View v) {
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    tailleTrait.setText(String.valueOf(progress));
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
-                }
-            });
 
             if (v == confirmerTrait) {
-                dismiss();
+              dismiss();
             }
         }
+
+    }
+    public int retournerTaille(){
+        return seekBar.getProgress();
     }
 }

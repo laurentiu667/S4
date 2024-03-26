@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     TableRow couleur;
     Surface surface;
     String hexColor = "#000000";
-    Forme forme = new Trait(Color.parseColor(hexColor), 5);
+    Forme forme;
 
     Rectangle rectangle;
     Triangle triangle;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         couleur = findViewById(R.id.tableCouleur);
         choixImage = findViewById(R.id.choixImage);
         trait = new trait(this);
-
+        forme = new Trait(Color.parseColor(hexColor), recupererTaille());
 
 
         surface = new Surface(this);
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         parent.addView(surface);
 
         ec = new Ecouteur();
+
         surface.setOnTouchListener(ec);
 
 
@@ -93,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
     private void dialog(){
         trait.show();
     }
+    private int recupererTaille(){
+        try {
+            int taille = trait.retournerTaille();
+        } catch (Exception e){
+            return 5;
+        }
+        return trait.retournerTaille();
+    }
     private class Ecouteur implements View.OnTouchListener, View.OnClickListener {
 
 
@@ -109,31 +119,27 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.remplissage:
                         bg = new Background();
                         bg.setHexColor(hexColor);
-                        System.out.println("bg set");
+                        bg.dessiner(surface);
                         break;
                     case R.id.effacer:
-                        forme = new Efface(color.getColor(), 5);
-
-                        surface.invalidate();
+                        forme = new Efface(color.getColor(), recupererTaille());
                         break;
                     case R.id.crayon:
-                        forme = new Trait(Color.parseColor(hexColor), 5);
+                        forme = new Trait(Color.parseColor(hexColor), recupererTaille());
 
                         break;
                     case R.id.rectangle:
-                        forme = new Rectangle(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
+                        forme = new Rectangle(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
                         break;
                     case R.id.triangle:
-                        forme = new Triangle(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
+                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
                         break;
                     case R.id.ovale:
-                        forme = new Ovale(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
+                        forme = new Ovale(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
                         break;
                     case R.id.trait:
                         dialog();
                         break;
-
-
 
                 }
             }
@@ -149,24 +155,19 @@ public class MainActivity extends AppCompatActivity {
                     y1 = (int) event.getY();
 
                     if (forme instanceof Trait) {
-                        forme = new Trait(Color.parseColor(hexColor), 5);
+                        forme = new Trait(Color.parseColor(hexColor), recupererTaille());
                         ((Trait) forme).move_to(x1, y1);
 
                     } else if (forme instanceof Rectangle) {
-                        forme = new Rectangle(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
+                        forme = new Rectangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
                     } else if (forme instanceof Triangle) {
-                        forme = new Triangle(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
+                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
                     } else if (forme instanceof Ovale) {
-                        forme = new Ovale(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
-                    } else if (bg instanceof Background) {
-                        bg = new Background();
-                        bg.dessiner(surface);
-                        System.out.println("bg dessiné");
+                        forme = new Ovale(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
                     } else if (forme instanceof Efface) {
-                        forme = new Efface(color.getColor(), 5);
+                        forme = new Efface(color.getColor(), recupererTaille());
                         ((Efface) forme).move_to(x1, y1);
                     }
-
                     surface.invalidate();
 
                     return true;
@@ -192,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
                 case MotionEvent.ACTION_UP:
 
                     listeFormes.add(forme);
-                    surface.invalidate();
 
                     return true;
             }

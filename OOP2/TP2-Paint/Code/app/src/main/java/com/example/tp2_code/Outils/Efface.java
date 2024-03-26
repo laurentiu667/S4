@@ -31,4 +31,5 @@ public class Efface extends Forme{
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawPath(path, paint);
     }
+
 }

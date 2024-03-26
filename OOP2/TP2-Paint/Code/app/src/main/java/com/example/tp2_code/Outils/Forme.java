@@ -15,6 +15,7 @@ public abstract class Forme {
     }
 
 
+
     public int getCouleur() {
         return couleur;
     }
