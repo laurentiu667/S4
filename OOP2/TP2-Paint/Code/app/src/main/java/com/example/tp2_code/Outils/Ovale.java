@@ -3,6 +3,8 @@ package com.example.tp2_code.Outils;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import com.example.tp2_code.MainActivity;
+
 public class Ovale extends Forme {
     private int x, y, x2, y2;
 

@@ -1,6 +1,9 @@
 package com.example.tp2_code.Outils;
 
 import android.graphics.Canvas;
+import android.view.Surface;
+
+import com.example.tp2_code.MainActivity;
 
 public abstract class Forme {
     protected int couleur;
@@ -21,6 +24,8 @@ public abstract class Forme {
     }
 
     public abstract void dessiner(Canvas canvas);
+
+
 
 
 

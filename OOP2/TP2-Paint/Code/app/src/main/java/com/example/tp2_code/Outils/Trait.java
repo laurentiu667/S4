@@ -3,6 +3,11 @@ package com.example.tp2_code.Outils;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.drawable.ColorDrawable;
+
+import com.example.tp2_code.MainActivity;
+
+import java.util.concurrent.RecursiveTask;
 
 public class Trait extends Forme{
 
@@ -20,6 +25,7 @@ public class Trait extends Forme{
     public void line_to(float x, float y) {
         path.lineTo(x, y);
     }
+
 
     @Override
     public void dessiner(Canvas canvas) {

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,11 +22,15 @@ import android.widget.SeekBar;
 import android.widget.TableRow;
 
 import com.example.tp2_code.Outils.Background;
+import com.example.tp2_code.Outils.Efface;
 import com.example.tp2_code.Outils.Forme;
 import com.example.tp2_code.Outils.Ovale;
 import com.example.tp2_code.Outils.Rectangle;
+import com.example.tp2_code.Outils.TailleTrait;
 import com.example.tp2_code.Outils.Trait;
 import com.example.tp2_code.Outils.Triangle;
+
+import org.w3c.dom.ls.LSOutput;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -42,11 +47,15 @@ public class MainActivity extends AppCompatActivity {
     Rectangle rectangle;
     Triangle triangle;
     Ovale ovale;
-
+    Efface efface;
+    TailleTrait tailleTrait;
+    trait trait;
     Background bg;
 
     Ecouteur ec;
     List<Forme> listeFormes = new ArrayList<>();
+    ColorDrawable color;
+
 
 
     @Override
@@ -57,12 +66,17 @@ public class MainActivity extends AppCompatActivity {
         parent = findViewById(R.id.parent);
         couleur = findViewById(R.id.tableCouleur);
         choixImage = findViewById(R.id.choixImage);
+        trait = new trait(this);
+
+
 
         surface = new Surface(this);
+        surface.setBackgroundColor(Color.parseColor("#FFFFFF"));
         parent.addView(surface);
 
         ec = new Ecouteur();
         surface.setOnTouchListener(ec);
+
 
 
         for (int i = 0; i < couleur.getChildCount(); i++) {
@@ -76,12 +90,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void dialog(){
+        trait.show();
+    }
     private class Ecouteur implements View.OnTouchListener, View.OnClickListener {
+
 
         private int x1, y1, x2, y2;
 
         @Override
         public void onClick(View v) {
+            color = (ColorDrawable) surface.getBackground();
 
             if (v instanceof Button) {
                 hexColor = v.getTag().toString();
@@ -90,7 +109,12 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.remplissage:
                         bg = new Background();
                         bg.setHexColor(hexColor);
+                        System.out.println("bg set");
+                        break;
+                    case R.id.effacer:
+                        forme = new Efface(color.getColor(), 5);
 
+                        surface.invalidate();
                         break;
                     case R.id.crayon:
                         forme = new Trait(Color.parseColor(hexColor), 5);
@@ -104,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.ovale:
                         forme = new Ovale(Color.parseColor(hexColor), 5, 0, 0, 0, 0);
+                        break;
+                    case R.id.trait:
+                        dialog();
                         break;
 
 
@@ -124,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     if (forme instanceof Trait) {
                         forme = new Trait(Color.parseColor(hexColor), 5);
                         ((Trait) forme).move_to(x1, y1);
+
                     } else if (forme instanceof Rectangle) {
                         forme = new Rectangle(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
                     } else if (forme instanceof Triangle) {
@@ -131,8 +159,12 @@ public class MainActivity extends AppCompatActivity {
                     } else if (forme instanceof Ovale) {
                         forme = new Ovale(Color.parseColor(hexColor), 5, x1, y1, x1, y1);
                     } else if (bg instanceof Background) {
+                        bg = new Background();
                         bg.dessiner(surface);
-                        System.out.println("down");
+                        System.out.println("bg dessiné");
+                    } else if (forme instanceof Efface) {
+                        forme = new Efface(color.getColor(), 5);
+                        ((Efface) forme).move_to(x1, y1);
                     }
 
                     surface.invalidate();
@@ -150,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
                         ((Triangle) forme).setCoordonnees(x1, y1, x2, y2);
                     } else if (forme instanceof Ovale) {
                         ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
+                    } else if (forme instanceof Efface) {
+                        ((Efface) forme).line_to(x2, y2);
                     }
 
                     surface.invalidate();
@@ -166,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public class Surface extends View {
 
         public Surface(Context context) {
@@ -179,14 +214,17 @@ public class MainActivity extends AppCompatActivity {
             // si elle existe tu la dessine
             for (Forme forme : listeFormes) {
                 forme.dessiner(canvas);
-                System.out.println(listeFormes.size());
+
             }
             // sinon tu dessine une nouvelle forme
             if (forme != null) {
                 forme.dessiner(canvas);
             }
+            System.out.println(listeFormes.size());
         }
     }
+
+
 
 
 
