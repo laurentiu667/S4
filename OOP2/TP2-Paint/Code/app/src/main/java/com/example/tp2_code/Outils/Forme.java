@@ -14,7 +14,9 @@ public abstract class Forme {
         this.largeur = largeur;
     }
 
-
+    public void setCouleur(int couleur) {
+        this.couleur = couleur;
+    }
 
     public int getCouleur() {
         return couleur;

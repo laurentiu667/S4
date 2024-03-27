@@ -30,8 +30,8 @@ public class trait extends Dialog {
         setContentView(R.layout.activity_trait);
 
         seekBar = findViewById(R.id.seekBar);
-        seekBar.setMax(100);
-
+        seekBar.setMax(200);
+        seekBar.setProgress(10);
         tailleTrait = findViewById(R.id.taille_int);
         confirmerTrait = findViewById(R.id.confirmer_taille);
         ec = new Ecouteur();
@@ -48,7 +48,8 @@ public class trait extends Dialog {
         public void onClick(View v) {
 
             if (v == confirmerTrait) {
-              dismiss();
+                tailleTrait.setText(seekBar.getProgress());
+                dismiss();
             }
         }
 
