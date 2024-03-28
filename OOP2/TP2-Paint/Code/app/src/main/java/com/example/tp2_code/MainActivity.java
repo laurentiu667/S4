@@ -35,6 +35,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
     Background bg;
 
     Ecouteur ec;
-    List<Forme> listeFormes = new ArrayList<>();
+//    List<Forme> listeFormes = new ArrayList<>();
+    Vector<Forme> listeFormes = new Vector<>();
     ColorDrawable color;
 
 
@@ -187,11 +189,11 @@ public class MainActivity extends AppCompatActivity {
                         ((Efface) forme).line_to(x2, y2);
                     }
 
+
                     surface.invalidate();
 
                     return true;
                 case MotionEvent.ACTION_UP:
-
                     listeFormes.add(forme);
 
                     return true;
@@ -211,10 +213,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-            // si elle existe tu la dessine
-            for (Forme forme : listeFormes) {
+//            // si elle existe tu la dessine
+//            for (Forme forme : listeFormes) {
+//                forme.dessiner(canvas);
+//            }
+            for (int i = 0; i < listeFormes.size(); i++) {
+                forme = listeFormes.get(i);
                 forme.dessiner(canvas);
-
             }
             // sinon tu dessine une nouvelle forme
             if (forme != null) {
