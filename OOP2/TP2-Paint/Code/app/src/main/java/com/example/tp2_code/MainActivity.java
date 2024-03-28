@@ -6,10 +6,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +27,7 @@ import com.example.tp2_code.Outils.Background;
 import com.example.tp2_code.Outils.Efface;
 import com.example.tp2_code.Outils.Forme;
 import com.example.tp2_code.Outils.Ovale;
+import com.example.tp2_code.Outils.Pipelet;
 import com.example.tp2_code.Outils.Rectangle;
 import com.example.tp2_code.Outils.TailleTrait;
 import com.example.tp2_code.Outils.Trait;
@@ -50,14 +53,22 @@ public class MainActivity extends AppCompatActivity {
     Ovale ovale;
     Efface efface;
     TailleTrait tailleTrait;
+    Pipelet pipelet;
     trait trait;
     Background bg;
 
     Ecouteur ec;
+<<<<<<< HEAD
 //    List<Forme> listeFormes = new ArrayList<>();
     Vector<Forme> listeFormes = new Vector<>();
     ColorDrawable color;
+=======
+    List<Forme> listeFormes = new ArrayList<>();
+    List<Forme> listeFormesEfface = new ArrayList<>();
+    boolean cliquer = false;
+>>>>>>> 54b54d20a4da41504452d88ba94947770200409c
 
+    ColorDrawable color;
 
 
     @Override
@@ -99,20 +110,23 @@ public class MainActivity extends AppCompatActivity {
     }
     private int recupererTaille(){
         try {
-            int taille = trait.retournerTaille();
+            return trait.retournerTaille();
         } catch (Exception e){
-            return 5;
+            return 20;
         }
-        return trait.retournerTaille();
+
     }
     private class Ecouteur implements View.OnTouchListener, View.OnClickListener {
 
 
-        private int x1, y1, x2, y2;
+
+        private int x1, y1, x2, y2, x3, y3;
+
 
         @Override
         public void onClick(View v) {
             color = (ColorDrawable) surface.getBackground();
+
 
             if (v instanceof Button) {
                 hexColor = v.getTag().toString();
@@ -142,10 +156,26 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.trait:
                         dialog();
                         break;
-
+                    case R.id.undo:
+                        if (listeFormes.size() > 0) {
+                            int lastIndex = listeFormes.size() - 1;
+                            listeFormesEfface.add(listeFormes.get(lastIndex));
+                            listeFormes.remove(lastIndex);
+                            surface.invalidate();
+                        }
+                        break;
+                    case R.id.redo:
+                        if (listeFormesEfface.size() > 0) {
+                            int lastIndex = listeFormesEfface.size() - 1;
+                            listeFormes.add(listeFormesEfface.get(lastIndex));
+                            listeFormesEfface.remove(lastIndex);
+                            surface.invalidate();
+                        }
+                        break;
                 }
             }
         }
+
 
 
         @Override
@@ -162,14 +192,14 @@ public class MainActivity extends AppCompatActivity {
 
                     } else if (forme instanceof Rectangle) {
                         forme = new Rectangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
-                    } else if (forme instanceof Triangle) {
-                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
                     } else if (forme instanceof Ovale) {
                         forme = new Ovale(Color.parseColor(hexColor), recupererTaille(), x1, y1, x1, y1);
                     } else if (forme instanceof Efface) {
                         forme = new Efface(color.getColor(), recupererTaille());
                         ((Efface) forme).move_to(x1, y1);
                     }
+
+                    listeFormes.add(forme);
                     surface.invalidate();
 
                     return true;
@@ -181,25 +211,33 @@ public class MainActivity extends AppCompatActivity {
                         ((Trait) forme).line_to(x2, y2);
                     } else if (forme instanceof Rectangle) {
                         ((Rectangle) forme).setCoordonnees(x1, y1, x2, y2);
-                    } else if (forme instanceof Triangle) {
-                        ((Triangle) forme).setCoordonnees(x1, y1, x2, y2);
                     } else if (forme instanceof Ovale) {
                         ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
                     } else if (forme instanceof Efface) {
                         ((Efface) forme).line_to(x2, y2);
                     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 54b54d20a4da41504452d88ba94947770200409c
                     surface.invalidate();
 
                     return true;
                 case MotionEvent.ACTION_UP:
+<<<<<<< HEAD
                     listeFormes.add(forme);
+=======
+
+
+>>>>>>> 54b54d20a4da41504452d88ba94947770200409c
 
                     return true;
             }
             return false;
         }
+
+
     }
 
 
@@ -213,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
+<<<<<<< HEAD
 //            // si elle existe tu la dessine
 //            for (Forme forme : listeFormes) {
 //                forme.dessiner(canvas);
@@ -223,8 +262,19 @@ public class MainActivity extends AppCompatActivity {
             }
             // sinon tu dessine une nouvelle forme
             if (forme != null) {
+=======
+            for (Forme forme : listeFormes) {
+
+                if (forme instanceof Efface) {
+                    // changer la couleur de l efface en fonction de la couleur du fond
+                    forme.setCouleur(color.getColor());
+                }
+
+>>>>>>> 54b54d20a4da41504452d88ba94947770200409c
                 forme.dessiner(canvas);
             }
+
+
             System.out.println(listeFormes.size());
         }
     }
