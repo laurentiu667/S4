@@ -1,18 +1,22 @@
 package com.example.tp2_code.Outils;
 
-public class Pipelet {
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
-    private String couleur;
+public class Pipelet extends Forme {
+    private Bitmap bitmapImage;
 
-    public void Pipelet(String couleur) {
-        this.couleur = couleur;
+    public Pipelet(int couleur, int largeur, Bitmap bitmapImage) {
+        super(couleur, largeur);
+        this.bitmapImage = bitmapImage;
     }
 
-    public String getCouleur() {
-        return couleur;
+    @Override
+    public void dessiner(Canvas canvas) {
+
     }
 
-    public void setCouleur(String couleur) {
-        this.couleur = couleur;
+    public int pickColor(int x, int y) {
+        return bitmapImage.getPixel(x, y);
     }
 }

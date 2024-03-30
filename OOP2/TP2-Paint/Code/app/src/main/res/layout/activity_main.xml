@@ -14,22 +14,23 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/couleurActuelle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="10dp"
+            android:background="#FFFFFF"
             android:gravity="center"
-            android:text="Palette de couleur"
             android:textSize="24sp" />
 
         <!-- Wrap the TableRow inside HorizontalScrollView for horizontal scrolling -->
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:background="#FFFFFF">
 
             <TableRow
                 android:id="@+id/tableCouleur"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <Button
                     android:layout_width="match_parent"
@@ -161,7 +162,7 @@
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:background="#ECECEC"
         android:orientation="vertical"></LinearLayout>
 

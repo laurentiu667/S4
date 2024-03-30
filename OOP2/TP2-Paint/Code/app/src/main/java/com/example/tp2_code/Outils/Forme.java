@@ -13,6 +13,9 @@ public abstract class Forme {
         this.couleur = couleur;
         this.largeur = largeur;
     }
+    public Forme(int couleur){
+        this.couleur = couleur;
+    }
 
     public void setCouleur(int couleur) {
         this.couleur = couleur;
@@ -27,9 +30,5 @@ public abstract class Forme {
     }
 
     public abstract void dessiner(Canvas canvas);
-
-
-
-
 
 }

@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.graphics.Path;
 import android.widget.SeekBar;
 import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tp2_code.Outils.Background;
 import com.example.tp2_code.Outils.Efface;
@@ -43,6 +45,7 @@ import java.util.Vector;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout parent, choixImage;
+    TextView couleurActuelle;
     TableRow couleur;
     Surface surface;
     String hexColor = "#000000";
@@ -55,20 +58,15 @@ public class MainActivity extends AppCompatActivity {
     TailleTrait tailleTrait;
     Pipelet pipelet;
     trait trait;
+    nuageCouleur nuageCouleur;
     Background bg;
 
     Ecouteur ec;
-<<<<<<< HEAD
-//    List<Forme> listeFormes = new ArrayList<>();
-    Vector<Forme> listeFormes = new Vector<>();
-    ColorDrawable color;
-=======
+
     List<Forme> listeFormes = new ArrayList<>();
     List<Forme> listeFormesEfface = new ArrayList<>();
-    boolean cliquer = false;
->>>>>>> 54b54d20a4da41504452d88ba94947770200409c
-
     ColorDrawable color;
+
 
 
     @Override
@@ -91,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
         ec = new Ecouteur();
 
         surface.setOnTouchListener(ec);
-
+        couleurActuelle = findViewById(R.id.couleurActuelle);
+        couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
 
 
         for (int i = 0; i < couleur.getChildCount(); i++) {
@@ -108,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
     private void dialog(){
         trait.show();
     }
+    private void dialogCouleur(){
+        nuageCouleur.show();
+    }
+
     private int recupererTaille(){
         try {
             return trait.retournerTaille();
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         private int x1, y1, x2, y2, x3, y3;
-
+        boolean cliquerTriangleVertex = false;
 
         @Override
         public void onClick(View v) {
@@ -130,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (v instanceof Button) {
                 hexColor = v.getTag().toString();
+                couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
             } else if (v instanceof ImageView) {
                 switch (v.getId()) {
                     case R.id.remplissage:
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                         forme = new Rectangle(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
                         break;
                     case R.id.triangle:
-                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
+                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), 0, 0,0 , 0);
                         break;
                     case R.id.ovale:
                         forme = new Ovale(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
@@ -171,6 +175,11 @@ public class MainActivity extends AppCompatActivity {
                             listeFormesEfface.remove(lastIndex);
                             surface.invalidate();
                         }
+                        break;
+                    case R.id.pipelet:
+                        Bitmap bitmapImage = surface.getBitmapImage();
+                        forme = new Pipelet(Color.parseColor(hexColor), recupererTaille(), bitmapImage);
+
                         break;
                 }
             }
@@ -197,6 +206,22 @@ public class MainActivity extends AppCompatActivity {
                     } else if (forme instanceof Efface) {
                         forme = new Efface(color.getColor(), recupererTaille());
                         ((Efface) forme).move_to(x1, y1);
+                    } else if (forme instanceof Pipelet) {
+                        int pickedColor = ((Pipelet) forme).pickColor(x1, y1);
+                        hexColor = String.format("#%06X", (0xFFFFFF & pickedColor));
+                        couleurActuelle.setBackgroundColor(pickedColor);
+                    } else if (forme instanceof Triangle) {
+                        x1 = (int) event.getX();
+                        y1 = (int) event.getY();
+                        x2 = (int) event.getX();
+                        y2 = (int) event.getY();
+                        if (cliquerTriangleVertex == false) {
+
+
+                            cliquerTriangleVertex = true;
+                        } else {
+                            ((Triangle) forme).setCoordonnees(x1, y1);
+                        }
                     }
 
                     listeFormes.add(forme);
@@ -215,22 +240,23 @@ public class MainActivity extends AppCompatActivity {
                         ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
                     } else if (forme instanceof Efface) {
                         ((Efface) forme).line_to(x2, y2);
+                    } else if (forme instanceof Triangle) {
+
+                        x2 = (int) event.getX();
+                        y2 = (int) event.getY();
+
+                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x2, y2);
                     }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 54b54d20a4da41504452d88ba94947770200409c
                     surface.invalidate();
 
                     return true;
                 case MotionEvent.ACTION_UP:
-<<<<<<< HEAD
-                    listeFormes.add(forme);
-=======
 
+                    if (forme instanceof Pipelet){
+                        forme = new Trait(Color.parseColor(hexColor), recupererTaille());
+                    }
 
->>>>>>> 54b54d20a4da41504452d88ba94947770200409c
 
                     return true;
             }
@@ -246,32 +272,29 @@ public class MainActivity extends AppCompatActivity {
         public Surface(Context context) {
             super(context);
         }
+        public Bitmap getBitmapImage() {
+            this.buildDrawingCache();
+            Bitmap bitmapImage = Bitmap.createBitmap(this.getDrawingCache());
+            this.destroyDrawingCache();
 
+            return bitmapImage;
+        }
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
 
-<<<<<<< HEAD
-//            // si elle existe tu la dessine
-//            for (Forme forme : listeFormes) {
-//                forme.dessiner(canvas);
-//            }
-            for (int i = 0; i < listeFormes.size(); i++) {
-                forme = listeFormes.get(i);
-                forme.dessiner(canvas);
-            }
-            // sinon tu dessine une nouvelle forme
             if (forme != null) {
-=======
-            for (Forme forme : listeFormes) {
 
-                if (forme instanceof Efface) {
-                    // changer la couleur de l efface en fonction de la couleur du fond
-                    forme.setCouleur(color.getColor());
+                for (Forme forme : listeFormes) {
+
+                    if (forme instanceof Efface) {
+                        // changer la couleur de l efface en fonction de la couleur du fond
+                        forme.setCouleur(color.getColor());
+                    }
+
+
+                    forme.dessiner(canvas);
                 }
-
->>>>>>> 54b54d20a4da41504452d88ba94947770200409c
-                forme.dessiner(canvas);
             }
 
 

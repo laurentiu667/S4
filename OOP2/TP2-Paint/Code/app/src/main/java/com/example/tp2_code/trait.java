@@ -48,7 +48,7 @@ public class trait extends Dialog {
         public void onClick(View v) {
 
             if (v == confirmerTrait) {
-                tailleTrait.setText(seekBar.getProgress());
+
                 dismiss();
             }
         }
