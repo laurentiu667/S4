@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     trait trait;
     EnregistrerImage enregistrerImage;
     Background bg;
+    couleurNuage couleurNuage;
 
     Ecouteur ec;
 
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         couleur = findViewById(R.id.tableCouleur);
         choixImage = findViewById(R.id.choixImage);
         trait = new trait(this);
+        couleurNuage = new couleurNuage(this, this);
         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
 
 
@@ -114,9 +116,9 @@ public class MainActivity extends AppCompatActivity {
     private void dialog(){
         trait.show();
     }
-//    private void dialogCouleur(){
-//        nuageCouleur.show();
-//    }
+    private void dialogCouleur(){
+        couleurNuage.show();
+    }
 
     private int recupererTaille(){
         try {
@@ -144,9 +146,11 @@ public class MainActivity extends AppCompatActivity {
             } else if (v instanceof ImageView) {
                 switch (v.getId()) {
                     case R.id.remplissage:
-                        bg = new Background(hexColor);
+
+                        bg = new Background();
+                        bg.setHexColor(hexColor);
                         bg.dessiner(surface);
-                        forme = bg;
+
                         break;
                     case R.id.effacer:
                         forme = new Efface(color.getColor(), recupererTaille());
@@ -191,8 +195,11 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.enregistrer:
                         Bitmap bitmap = surface.getBitmapImage();
                         try {
-                            File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                            File file = new File(downloadsDirectory, nomImage + ".png");
+                            File directory = new File(Environment.getExternalStorageDirectory(), "Pictures"); // Emplacement commun pour les images
+                            if (!directory.exists()) {
+                                directory.mkdirs(); // Crée les répertoires s'ils n'existent pas
+                            }
+                            File file = new File(directory, nomImage + ".png");
                             FileOutputStream fos = new FileOutputStream(file);
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                             fos.close();
@@ -201,8 +208,15 @@ public class MainActivity extends AppCompatActivity {
                             nomImage = "image" + chiffreimage;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "lol paie 5 dollars", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_LONG).show();
                         }
+
+
+                        break;
+                    case R.id.palette:
+
+                        dialogCouleur();
+
 
                         break;
 
@@ -220,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                     x1 = (int) event.getX();
                     y1 = (int) event.getY();
 
-                    if (forme instanceof Trait) {
+                   if (forme instanceof Trait) {
                         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
                         ((Trait) forme).move_to(x1, y1);
 

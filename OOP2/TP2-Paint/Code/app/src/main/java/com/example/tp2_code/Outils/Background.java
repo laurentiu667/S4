@@ -6,13 +6,11 @@ import android.graphics.Paint;
 
 import com.example.tp2_code.MainActivity;
 
-public class Background extends Forme{
+public class Background {
     private String hexColor;
 
 
-    public Background(String hexColor) {
-        super(Color.parseColor(hexColor));
-    }
+
     public void setHexColor(String hexColor) {
         this.hexColor = hexColor;
     }

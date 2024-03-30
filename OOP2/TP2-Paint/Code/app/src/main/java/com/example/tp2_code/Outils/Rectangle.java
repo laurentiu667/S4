@@ -30,6 +30,7 @@ public class Rectangle extends Forme {
     @Override
     public void dessiner(Canvas canvas) {
         Paint paint = new Paint();
+
         paint.setColor(couleur);
         paint.setStrokeWidth(largeur);
         paint.setStyle(Paint.Style.STROKE);
