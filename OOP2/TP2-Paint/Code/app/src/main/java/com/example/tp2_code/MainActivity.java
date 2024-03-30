@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (v instanceof ImageView) {
                 switch (v.getId()) {
                     case R.id.remplissage:
-                        bg = new Background();
-                        bg.setHexColor(hexColor);
+                        bg = new Background(hexColor);
                         bg.dessiner(surface);
+                        forme = bg;
                         break;
                     case R.id.effacer:
                         forme = new Efface(color.getColor(), recupererTaille());
@@ -156,13 +156,13 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.rectangle:
-                        forme = new Rectangle(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
+                        forme = new Rectangle(Color.parseColor(hexColor), recupererTaille());
                         break;
                     case R.id.triangle:
-                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), 0, 0,0 , 0);
+                        forme = new Triangle(Color.parseColor(hexColor), recupererTaille());
                         break;
                     case R.id.ovale:
-                        forme = new Ovale(Color.parseColor(hexColor), recupererTaille(), 0, 0, 0, 0);
+                        forme = new Ovale(Color.parseColor(hexColor), recupererTaille());
                         break;
                     case R.id.trait:
                         dialog();

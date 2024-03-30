@@ -15,6 +15,11 @@ public class Triangle extends Forme {
         this.y2 = y2;
         path = new Path();
     }
+    public Triangle(int couleur, int largeur) {
+        super(couleur, largeur);
+        path = new Path();
+
+    }
 
     public void setCoordonnees(int x3, int y3) {
         this.x3 = x3;

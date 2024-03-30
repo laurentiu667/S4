@@ -15,6 +15,10 @@ public class Ovale extends Forme {
         this.x2 = x2;
         this.y2 = y2;
     }
+    public Ovale(int couleur, int largeur) {
+        super(couleur, largeur);
+
+    }
 
     public void setCoordonnees(int x, int y, int x2, int y2) {
         this.x = x;

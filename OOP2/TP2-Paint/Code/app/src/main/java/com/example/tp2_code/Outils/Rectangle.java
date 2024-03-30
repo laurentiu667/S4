@@ -16,6 +16,9 @@ public class Rectangle extends Forme {
         this.y2 = y2;
 
     }
+    public Rectangle(int couleur, int largeur){
+        super(couleur, largeur);
+    }
 
     public void setCoordonnees(int x, int y, int x2, int y2) {
         this.x = x;
