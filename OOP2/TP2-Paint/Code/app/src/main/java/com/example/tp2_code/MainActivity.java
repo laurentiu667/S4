@@ -13,9 +13,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,8 @@ import com.example.tp2_code.Outils.Triangle;
 
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     TailleTrait tailleTrait;
     Pipelet pipelet;
     trait trait;
-    nuageCouleur nuageCouleur;
+    EnregistrerImage enregistrerImage;
     Background bg;
 
     Ecouteur ec;
@@ -67,12 +71,15 @@ public class MainActivity extends AppCompatActivity {
     List<Forme> listeFormesEfface = new ArrayList<>();
     ColorDrawable color;
 
-
+    String nomImage = "image";
+    int chiffreimage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         parent = findViewById(R.id.parent);
@@ -107,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
     private void dialog(){
         trait.show();
     }
-    private void dialogCouleur(){
-        nuageCouleur.show();
-    }
+//    private void dialogCouleur(){
+//        nuageCouleur.show();
+//    }
 
     private int recupererTaille(){
         try {
@@ -131,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             color = (ColorDrawable) surface.getBackground();
 
 
-            if (v instanceof Button) {
+            if (v instanceof TextView) {
                 hexColor = v.getTag().toString();
                 couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
             } else if (v instanceof ImageView) {
@@ -181,6 +188,24 @@ public class MainActivity extends AppCompatActivity {
                         forme = new Pipelet(Color.parseColor(hexColor), recupererTaille(), bitmapImage);
 
                         break;
+                    case R.id.enregistrer:
+                        Bitmap bitmap = surface.getBitmapImage();
+                        try {
+                            File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                            File file = new File(downloadsDirectory, nomImage + ".png");
+                            FileOutputStream fos = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                            fos.close();
+                            Toast.makeText(MainActivity.this, nomImage + " est dans " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                            chiffreimage++;
+                            nomImage = "image" + chiffreimage;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(MainActivity.this, "lol paie 5 dollars", Toast.LENGTH_LONG).show();
+                        }
+
+                        break;
+
                 }
             }
         }
@@ -217,10 +242,11 @@ public class MainActivity extends AppCompatActivity {
                         y2 = (int) event.getY();
                         if (cliquerTriangleVertex == false) {
 
-
                             cliquerTriangleVertex = true;
                         } else {
-                            ((Triangle) forme).setCoordonnees(x1, y1);
+
+                            ((Triangle) forme).setCoordonnees(x2, y2);
+                            cliquerTriangleVertex = false;
                         }
                     }
 
@@ -246,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
                         y2 = (int) event.getY();
 
                         forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x2, y2);
+
                     }
 
                     surface.invalidate();

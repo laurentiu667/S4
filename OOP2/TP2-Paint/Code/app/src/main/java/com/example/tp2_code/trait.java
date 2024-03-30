@@ -1,8 +1,6 @@
 package com.example.tp2_code;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -29,7 +27,7 @@ public class trait extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trait);
 
-        seekBar = findViewById(R.id.seekBar);
+        seekBar = findViewById(R.id.nomImage);
         seekBar.setMax(200);
         seekBar.setProgress(10);
         tailleTrait = findViewById(R.id.taille_int);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".trait">
+    tools:context=".EnregistrerImage">
 
     <LinearLayout
         android:layout_width="300dp"
@@ -24,28 +24,17 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:autoText="false"
-                android:gravity="right"
-                android:text="Largeur du trait : "
+                android:gravity="center"
+                android:text="Nom de l'image"
                 android:textColor="#000000"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/taille_int"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:textColor="#FFFFFF"
                 android:textSize="24sp" />
 
         </LinearLayout>
 
-        <SeekBar
+        <EditText
             android:id="@+id/nomImage"
-            style="@android:style/Widget.DeviceDefault.Light.SeekBar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:max="100" />
+            android:layout_height="50dp" />
 
         <Button
             android:id="@+id/confirmer_taille"
@@ -56,5 +45,4 @@
             android:text="Confirmer"
             android:textColor="#000000" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
