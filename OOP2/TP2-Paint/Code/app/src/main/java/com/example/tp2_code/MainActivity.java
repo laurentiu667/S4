@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.enregistrer:
                         Bitmap bitmap = surface.getBitmapImage();
                         try {
-                            File directory = new File(Environment.getExternalStorageDirectory(), "Pictures"); // Emplacement commun pour les images
+                            File directory = new File(Environment.DIRECTORY_DOWNLOADS, "Pictures"); // Emplacement commun pour les images
                             if (!directory.exists()) {
                                 directory.mkdirs(); // Crée les répertoires s'ils n'existent pas
                             }
