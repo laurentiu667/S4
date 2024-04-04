@@ -1,28 +1,19 @@
 package com.example.tp2_code;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.graphics.Path;
-import android.widget.SeekBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,44 +24,36 @@ import com.example.tp2_code.Outils.Forme;
 import com.example.tp2_code.Outils.Ovale;
 import com.example.tp2_code.Outils.Pipelet;
 import com.example.tp2_code.Outils.Rectangle;
-import com.example.tp2_code.Outils.TailleTrait;
 import com.example.tp2_code.Outils.Trait;
 import com.example.tp2_code.Outils.Triangle;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.File;
 import java.io.FileOutputStream;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Composants
     LinearLayout parent, choixImage;
     TextView couleurActuelle;
     TableRow couleur;
     Surface surface;
     String hexColor = "#000000";
+
+    // Sous classes
     Forme forme;
-
-    Rectangle rectangle;
-    Triangle triangle;
-    Ovale ovale;
-    Efface efface;
-    TailleTrait tailleTrait;
-    Pipelet pipelet;
-    trait trait;
-    EnregistrerImage enregistrerImage;
     Background bg;
-    couleurNuage couleurNuage;
+    ColorDrawable color;
+    trait trait;
 
+    couleurNuage couleurNuage;
     Ecouteur ec;
 
+    // liste des formes
     List<Forme> listeFormes = new ArrayList<>();
+    // liste des formes efface
     List<Forme> listeFormesEfface = new ArrayList<>();
-    ColorDrawable color;
 
     String nomImage = "image";
     int chiffreimage = 1;
@@ -83,36 +66,38 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        // initialiser les composants
         parent = findViewById(R.id.parent);
         couleur = findViewById(R.id.tableCouleur);
         choixImage = findViewById(R.id.choixImage);
+
         trait = new trait(this);
         couleurNuage = new couleurNuage(this, this);
         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
 
-
+        // initialiser la surface
         surface = new Surface(this);
         surface.setBackgroundColor(Color.parseColor("#FFFFFF"));
         parent.addView(surface);
 
+        // initialiser les ecouteurs
         ec = new Ecouteur();
-
         surface.setOnTouchListener(ec);
         couleurActuelle = findViewById(R.id.couleurActuelle);
         couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
 
-
+        // mettre les ecouteurs sur les boutons
         for (int i = 0; i < couleur.getChildCount(); i++) {
             couleur.getChildAt(i).setOnClickListener(ec);
         }
-
+        // mettre les ecouteurs sur les images
         for (int i = 0; i < choixImage.getChildCount(); i++) {
             choixImage.getChildAt(i).setOnClickListener(ec);
         }
 
-
     }
 
+    // Fonctions permettant d'ouvrir les dialogues
     private void dialog(){
         trait.show();
     }
@@ -120,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         couleurNuage.show();
     }
 
+    // Fonction permettant de recuperer la taille du trait
     private int recupererTaille(){
         try {
             return trait.retournerTaille();
@@ -130,34 +116,32 @@ public class MainActivity extends AppCompatActivity {
     }
     private class Ecouteur implements View.OnTouchListener, View.OnClickListener {
 
-
-
-        private int x1, y1, x2, y2, x3, y3;
+        // Variables pour toutes les formes
+        private int x1, y1, x2, y2;
+        // variable pour le triangle
         boolean cliquerTriangleVertex = false;
 
         @Override
         public void onClick(View v) {
             color = (ColorDrawable) surface.getBackground();
-
-
+            // Si on clique sur un TextView on recupere la couleur
             if (v instanceof TextView) {
                 hexColor = v.getTag().toString();
                 couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
-            } else if (v instanceof ImageView) {
+            }
+            // Si on clique sur un ImageView on effectue creer une forme
+            else if (v instanceof ImageView) {
                 switch (v.getId()) {
                     case R.id.remplissage:
-
                         bg = new Background();
                         bg.setHexColor(hexColor);
                         bg.dessiner(surface);
-
                         break;
                     case R.id.effacer:
                         forme = new Efface(color.getColor(), recupererTaille());
                         break;
                     case R.id.crayon:
                         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
-
                         break;
                     case R.id.rectangle:
                         forme = new Rectangle(Color.parseColor(hexColor), recupererTaille());
@@ -169,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                         forme = new Ovale(Color.parseColor(hexColor), recupererTaille());
                         break;
                     case R.id.trait:
+                        // Ouvrir le dialog pour choisir la taille du trait
                         dialog();
                         break;
                     case R.id.undo:
@@ -190,41 +175,34 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.pipelet:
                         Bitmap bitmapImage = surface.getBitmapImage();
                         forme = new Pipelet(Color.parseColor(hexColor), recupererTaille(), bitmapImage);
-
                         break;
                     case R.id.enregistrer:
                         Bitmap bitmap = surface.getBitmapImage();
                         try {
-                            File directory = new File(Environment.DIRECTORY_DOWNLOADS, "Pictures"); // Emplacement commun pour les images
+                            File directory = new File(Environment.getExternalStorageDirectory(), "Pictures");
                             if (!directory.exists()) {
-                                directory.mkdirs(); // Crée les répertoires s'ils n'existent pas
+                                directory.mkdirs(); //
                             }
                             File file = new File(directory, nomImage + ".png");
                             FileOutputStream fos = new FileOutputStream(file);
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                             fos.close();
-                            Toast.makeText(MainActivity.this, nomImage + " est dans " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, nomImage + "est enregistré", Toast.LENGTH_LONG).show();
+                            // incrementer le chiffre de l'image
                             chiffreimage++;
                             nomImage = "image" + chiffreimage;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(MainActivity.this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "erreur de path", Toast.LENGTH_LONG).show();
                         }
-
-
                         break;
                     case R.id.palette:
-
+                        // Ouvrire le dialog pour choisir la couleur en RGB
                         dialogCouleur();
-
-
                         break;
-
                 }
             }
         }
-
-
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -234,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     x1 = (int) event.getX();
                     y1 = (int) event.getY();
 
+                    // forme contient la forme cliquée lors de l'evenement onClick qui permet de creer une forme choisie
                    if (forme instanceof Trait) {
                         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
                         ((Trait) forme).move_to(x1, y1);
@@ -254,16 +233,16 @@ public class MainActivity extends AppCompatActivity {
                         y1 = (int) event.getY();
                         x2 = (int) event.getX();
                         y2 = (int) event.getY();
+                        // si le click n est pas un vertex
                         if (cliquerTriangleVertex == false) {
-
                             cliquerTriangleVertex = true;
                         } else {
-
-                            ((Triangle) forme).setCoordonnees(x2, y2);
+                            ((Triangle) forme).mettreAjourCoordonnee(x2, y2);
                             cliquerTriangleVertex = false;
                         }
                     }
 
+                    // on ajoute les formes ici car on veut que la forme soit ajoutée seulement lorsqu'on clique
                     listeFormes.add(forme);
                     surface.invalidate();
 
@@ -272,47 +251,40 @@ public class MainActivity extends AppCompatActivity {
                     x2 = (int) event.getX();
                     y2 = (int) event.getY();
 
+                    // permet de dessiner la forme en fonction du mouvement
                     if (forme instanceof Trait) {
                         ((Trait) forme).line_to(x2, y2);
                     } else if (forme instanceof Rectangle) {
-                        ((Rectangle) forme).setCoordonnees(x1, y1, x2, y2);
+                        ((Rectangle) forme).mettreAjourCoordonnee(x1, y1, x2, y2);
                     } else if (forme instanceof Ovale) {
-                        ((Ovale) forme).setCoordonnees(x1, y1, x2, y2);
+                        ((Ovale) forme).mettreAjourCoordonnee(x1, y1, x2, y2);
                     } else if (forme instanceof Efface) {
                         ((Efface) forme).line_to(x2, y2);
                     } else if (forme instanceof Triangle) {
-
                         x2 = (int) event.getX();
                         y2 = (int) event.getY();
-
                         forme = new Triangle(Color.parseColor(hexColor), recupererTaille(), x1, y1, x2, y2);
-
                     }
-
                     surface.invalidate();
-
                     return true;
                 case MotionEvent.ACTION_UP:
-
+                    // permet de choisir la couleur du pipelet lorsque quand c est relacher
                     if (forme instanceof Pipelet){
                         forme = new Trait(Color.parseColor(hexColor), recupererTaille());
                     }
-
-
                     return true;
             }
             return false;
         }
-
-
     }
-
 
     public class Surface extends View {
 
         public Surface(Context context) {
             super(context);
         }
+
+        // fonction permettant de retourner la couleur choisie au pixel
         public Bitmap getBitmapImage() {
             this.buildDrawingCache();
             Bitmap bitmapImage = Bitmap.createBitmap(this.getDrawingCache());
@@ -325,26 +297,14 @@ public class MainActivity extends AppCompatActivity {
             super.onDraw(canvas);
 
             if (forme != null) {
-
                 for (Forme forme : listeFormes) {
-
                     if (forme instanceof Efface) {
                         // changer la couleur de l efface en fonction de la couleur du fond
                         forme.setCouleur(color.getColor());
                     }
-
-
                     forme.dessiner(canvas);
                 }
             }
-
-
-            System.out.println(listeFormes.size());
         }
     }
-
-
-
-
-
 }

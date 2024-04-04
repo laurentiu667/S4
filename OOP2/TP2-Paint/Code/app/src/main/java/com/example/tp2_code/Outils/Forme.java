@@ -16,10 +16,6 @@ public abstract class Forme {
         this.largeur = largeur;
     }
 
-    public Forme(int couleur){
-        this.couleur = couleur;
-    }
-
     public void setCouleur(int couleur) {
         this.couleur = couleur;
     }

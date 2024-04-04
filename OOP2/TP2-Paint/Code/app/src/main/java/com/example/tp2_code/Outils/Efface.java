@@ -14,7 +14,6 @@ public class Efface extends Forme{
         super(color, largeur);
         path = new Path();
     }
-
     public void move_to(float x, float y){
         path.moveTo(x, y);
     }

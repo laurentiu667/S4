@@ -35,12 +35,10 @@ public class couleurNuage extends Dialog {
         G2 = findViewById(R.id.seekBarG);
         B3 = findViewById(R.id.seekBarB);
         ec = new Ecouteur();
-
         R1.setOnSeekBarChangeListener(ec);
         G2.setOnSeekBarChangeListener(ec);
         B3.setOnSeekBarChangeListener(ec);
     }
-
     private class Ecouteur implements SeekBar.OnSeekBarChangeListener {
 
         @Override
@@ -67,8 +65,4 @@ public class couleurNuage extends Dialog {
         }
     }
 
-    public int retournerCouleurShowColor(){
-        ColorDrawable colorDrawable = (ColorDrawable) showColor.getBackground();
-        return colorDrawable.getColor();
-    }
 }

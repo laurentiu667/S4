@@ -20,8 +20,7 @@ public class Triangle extends Forme {
         path = new Path();
 
     }
-
-    public void setCoordonnees(int x3, int y3) {
+    public void mettreAjourCoordonnee(int x3, int y3) {
         this.x3 = x3;
         this.y3 = y3;
         path = new Path(); // Réinitialise le chemin

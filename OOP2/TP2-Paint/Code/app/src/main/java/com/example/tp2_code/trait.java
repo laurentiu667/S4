@@ -21,7 +21,6 @@ public class trait extends Dialog {
         super(context);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,17 +35,13 @@ public class trait extends Dialog {
 
         confirmerTrait.setOnClickListener(ec);
 
-
-
     }
-
     private class Ecouteur implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
 
             if (v == confirmerTrait) {
-
                 dismiss();
             }
         }

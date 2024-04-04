@@ -15,7 +15,6 @@ public class Pipelet extends Forme {
     public void dessiner(Canvas canvas) {
 
     }
-
     public int pickColor(int x, int y) {
         return bitmapImage.getPixel(x, y);
     }

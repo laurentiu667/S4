@@ -41,7 +41,4 @@ public class EnregistrerImage extends Dialog {
         }
     }
 
-    public String retournerNomImage(){
-        return nomImageStr;
-    }
 }

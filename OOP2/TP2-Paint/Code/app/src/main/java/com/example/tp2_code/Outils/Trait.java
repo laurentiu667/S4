@@ -26,7 +26,6 @@ public class Trait extends Forme{
         path.lineTo(x, y);
     }
 
-
     @Override
     public void dessiner(Canvas canvas) {
         Paint paint = new Paint();

@@ -20,7 +20,7 @@ public class Ovale extends Forme {
 
     }
 
-    public void setCoordonnees(int x, int y, int x2, int y2) {
+    public void mettreAjourCoordonnee(int x, int y, int x2, int y2) {
         this.x = x;
         this.y = y;
         this.x2 = x2;

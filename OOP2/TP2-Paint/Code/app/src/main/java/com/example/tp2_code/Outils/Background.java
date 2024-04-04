@@ -9,8 +9,6 @@ import com.example.tp2_code.MainActivity;
 public class Background {
     private String hexColor;
 
-
-
     public void setHexColor(String hexColor) {
         this.hexColor = hexColor;
     }
