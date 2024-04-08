@@ -96,6 +96,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    // reset toute la surface
+    public void reset(View view) {
+        hexColor = "#000000";
+        couleurActuelle.setBackgroundColor(Color.parseColor(hexColor));
+        listeFormes.clear();
+        listeFormesEfface.clear();
+        surface.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        forme = new Trait(Color.parseColor(hexColor), recupererTaille());
+        surface.invalidate();
+    }
 
     // Fonctions permettant d'ouvrir les dialogues
     private void dialog(){
@@ -187,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                             FileOutputStream fos = new FileOutputStream(file);
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                             fos.close();
-                            Toast.makeText(MainActivity.this, nomImage + "est enregistré", Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, nomImage + " est enregistré", Toast.LENGTH_LONG).show();
                             // incrementer le chiffre de l'image
                             chiffreimage++;
                             nomImage = "image" + chiffreimage;
@@ -199,6 +209,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.palette:
                         // Ouvrire le dialog pour choisir la couleur en RGB
                         dialogCouleur();
+                        break;
+                    case R.id.reset:
+                        reset(v);
                         break;
                 }
             }
