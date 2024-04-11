@@ -27,21 +27,36 @@ public class trait extends Dialog {
         setContentView(R.layout.activity_trait);
 
         seekBar = findViewById(R.id.nomImage);
-        seekBar.setMax(200);
+        seekBar.setMax(300);
         seekBar.setProgress(10);
         tailleTrait = findViewById(R.id.taille_int);
         confirmerTrait = findViewById(R.id.confirmer_taille);
         ec = new Ecouteur();
 
         confirmerTrait.setOnClickListener(ec);
+        tailleTrait.setText(String.valueOf(seekBar.getProgress()));
 
     }
     private class Ecouteur implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    tailleTrait.setText(String.valueOf(seekBar.getProgress()));
+                }
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
 
-            if (v == confirmerTrait) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            if (v instanceof Button) {
                 dismiss();
             }
         }
