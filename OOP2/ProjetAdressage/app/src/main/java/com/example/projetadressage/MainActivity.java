@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
     Ecouteur ec;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,25 +53,14 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterCapitale = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, capitale);
         ArrayAdapter<String> adapterEtat = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, etat);
 
-
         spinnerCapitale.setAdapter(adapterCapitale);
         spinnerEtat.setAdapter(adapterEtat);
-
-
-
-
-
 
 
 
     }
     private class Ecouteur implements View.OnClickListener
     {
-
-
-
-
-
 
         @Override
         public void onClick(View v) {
@@ -83,17 +70,15 @@ public class MainActivity extends AppCompatActivity {
             String etat = spinnerEtat.getSelectedItem().toString();
             String capital = spinnerCapitale.getSelectedItem().toString();
             String code = champZip.getText().toString();
-
-            if (v instanceof Button){
+            if (v == bouton){
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 try {
                     Inscrit inscrit = new Inscrit(nom, prenom, adresse, capital, etat, code);
+                    System.out.println("sd");
                     builder.setTitle("reussi");
-                } catch(AdresseException e){
-
-                    builder.setTitle("Erreur");
+                } catch(Exception e){
+                    builder.setTitle(e.getMessage());
                     builder.setMessage(e.getMessage());
-
                     builder.show();
                 }
 

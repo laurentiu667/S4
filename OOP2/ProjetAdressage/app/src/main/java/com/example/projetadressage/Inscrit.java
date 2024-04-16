@@ -29,6 +29,7 @@ public class Inscrit {
 
 
 
+
         if (!hs.get(capitale).equals(etat)){
             throw new AdresseException(capitale, etat);
         }

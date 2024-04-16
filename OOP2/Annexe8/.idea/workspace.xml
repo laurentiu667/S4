@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d7e053c5-8950-47e0-b628-46d585ba3660" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Efface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Efface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Forme.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Forme.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Ovale.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Ovale.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Trait.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TP2-Paint/Code/app/src/main/java/com/example/tp2_code/Outils/Trait.java" afterDir="false" />
-    </list>
+    <list default="true" id="d7e053c5-8950-47e0-b628-46d585ba3660" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,6 +15,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2eEMsHOvJOr0Kx7mmwGOVnAU2ja" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -34,7 +31,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/Users/horloge/Desktop/S4/OOP2/Annexe8"
+    "last_opened_file_path": "C:/Users/horloge/Desktop/S4/OOP2/ProjetAdressage"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
