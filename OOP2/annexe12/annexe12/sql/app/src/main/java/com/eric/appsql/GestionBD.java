@@ -54,8 +54,9 @@ public class GestionBD extends SQLiteOpenHelper {
         db.insert("inventeur", null, values);
     }
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS inventeur");
+        onCreate(db);
     }
     public void ouvrir_database(){
         database = this.getReadableDatabase();
@@ -63,9 +64,18 @@ public class GestionBD extends SQLiteOpenHelper {
     public void fermer_database(){
         database.close();
     }
-    public Vector<String> select_inventeur(){
+    public Vector<String> select_inventtion(){
         Vector<String> v = new Vector<>();
         Cursor requete = database.rawQuery("select invention from inventeur", null);
+        while (requete.moveToNext()){
+            v.add(requete.getString(0));
+        }
+        requete.close();
+        return v;
+    }
+    public Vector<String> select_inventeur(){
+        Vector<String> v = new Vector<>();
+        Cursor requete = database.rawQuery("select nom from inventeur", null);
         while (requete.moveToNext()){
             v.add(requete.getString(0));
         }
@@ -75,6 +85,7 @@ public class GestionBD extends SQLiteOpenHelper {
 
     public boolean aBonneReponse(String nom, String invention){
         String[] Tab = {nom, invention};
+        // correcspond a l ordre du tableauq Tab
         Cursor cursor = database.rawQuery("select invention from inventeur where nom = ? and invention = ?", null);
         return cursor.moveToFirst();
     }
