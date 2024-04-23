@@ -1,0 +1,12 @@
+*{
+    background-color: blue;
+}
+.logged{
+    color: green;
+    background-color: yellow;
+    font-size: 1em;
+}
+.not-logged{
+    color: red;
+    font-size: 1em;
+}
