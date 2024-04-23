@@ -59,23 +59,52 @@ public class GestionDB extends SQLiteOpenHelper {
         ajouter_biere(new Biere(nom, brasserie, note), database);
     }
 
-    public Vector<Biere> select_biere() {
-        Vector<Biere> v = new Vector();
-        Cursor c = database.rawQuery("SELECT * FROM biere", null);
-        c.moveToFirst();
-        while (!c.isAfterLast()) {
-            v.add(new Biere(c.getString(1), c.getString(2), c.getFloat(3)));
-            c.moveToNext();
+    public Vector<String> select_biere() {
+        Vector<String> v = new Vector<>();
+        Cursor requete = database.rawQuery("select Nom from biere", null);
+        while (requete.moveToNext()) {
+            v.add(requete.getString(0));
         }
-        c.close();
+        requete.close();
         return v;
     }
 
-
-
-    public Vector<String> retournerMeilleur() throws Exception{
-        Vector<String> v = new Vector();
-
+    public Vector<String> select_brasserie() {
+        Vector<String> v = new Vector<>();
+        Cursor requete = database.rawQuery("select Brasserie from biere", null);
+        while (requete.moveToNext()) {
+            v.add(requete.getString(0));
+        }
+        requete.close();
         return v;
+    }
+
+    public Vector<String> select_note() {
+        Vector<String> v = new Vector<>();
+        Cursor requete = database.rawQuery("select Note from biere", null);
+        while (requete.moveToNext()) {
+            v.add(requete.getString(0));
+        }
+        requete.close();
+        return v;
+    }
+
+    public Vector<String> retournerMeilleur() {
+        Vector<String> top3Biere = new Vector<>();
+        // Ouvrir la base de données
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Définir la requête SQL
+        String query = "SELECT * FROM Biere ORDER BY note DESC LIMIT 3";
+        // Exécuter la requête
+        Cursor cursor = db.rawQuery(query, null);
+        // Parcourir les résultats
+        while (cursor.moveToNext()) {
+            top3Biere.add(cursor.getString(1));
+        }
+        // Fermer le curseur et la base de données
+        cursor.close();
+        db.close();
+        // Retourner la liste des 3 meilleures bières
+        return top3Biere;
     }
 }

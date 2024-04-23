@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import java.util.Vector;
+
 public class EnregistrementBiere extends AppCompatActivity {
 
     Button Enregistrer;
@@ -17,7 +19,9 @@ public class EnregistrementBiere extends AppCompatActivity {
     Ecouteur ec;
 
     GestionDB instance;
-
+    Vector<String> biereNom;
+    Vector<String> brasserieNom;
+    Vector<String> noteFinal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,9 @@ public class EnregistrementBiere extends AppCompatActivity {
         nom.setOnClickListener(ec);
         brasserie.setOnClickListener(ec);
         note.setOnClickListener(ec);
+        biereNom = instance.select_biere();
+        brasserieNom = instance.select_brasserie();
+        noteFinal = instance.select_note();
 
     }
     private class Ecouteur implements View.OnClickListener{
@@ -47,12 +54,18 @@ public class EnregistrementBiere extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if(v == Enregistrer){
-                instance.ajouter_new_biere(nom.getText().toString(), brasserie.getText().toString(), note.getRating());
+
+                String nomBiere = nom.getText().toString();
+                String nomBrasserie = brasserie.getText().toString();
+                float noteBiere = note.getRating();
 
 
+                instance.ajouter_new_biere(nomBiere, nomBrasserie, noteBiere);
 
+//                instance.onUpgrade( instance.getWritableDatabase(), 1, 1 );
 
                 finish();
+
 
             }
         }
