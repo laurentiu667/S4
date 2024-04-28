@@ -1,0 +1,219 @@
+-- Question 1 
+CREATE OR REPLACE VIEW EMP.Vue_Info_Employes AS
+SELECT d.nom AS "Nom du département",
+       e.nom AS "Nom",
+       e.prenom AS "Prénom",
+       e.id_employe AS "Numéro de l'employé",
+       p.id_portable AS "Numéro du portable"
+FROM EMP.Employes e
+JOIN EMP.Departement d ON e.departement = d.id_departement
+JOIN MAT.Portables p ON e.id_employe = p.id_portable
+ORDER BY d.nom ASC, e.nom ASC, e.prenom ASC;
+-- Appeler la fonction
+SELECT * FROM EMP.Vue_Info_Employes; 
+
+
+
+-- Question 2
+
+-- Procédure pour afficher les informations sur un employé par son numéro d'employé
+CREATE OR REPLACE PROCEDURE afficher_infos_employe(num_employe INTEGER)
+AS $$
+DECLARE
+    dept_nom VARCHAR(32);
+    poste_nom VARCHAR(32);
+BEGIN
+    -- Vérifier si l'employé existe
+    SELECT nom INTO dept_nom FROM EMP.Employes e JOIN EMP.Departement d ON e.departement = d.id_departement WHERE e.id_employe = num_employe;
+    SELECT nom INTO poste_nom FROM EMP.Employes e JOIN EMP.Poste p ON e.poste = p.id_poste WHERE e.id_employe = num_employe;
+
+    IF dept_nom IS NOT NULL AND poste_nom IS NOT NULL THEN
+        RAISE NOTICE 'Voici des informations sur l''employé %', num_employe;
+        RAISE NOTICE 'Le nom du département de l''employé est %', dept_nom;
+        RAISE NOTICE 'Le nom du poste de l''employé est %', poste_nom;
+    ELSE
+        RAISE NOTICE 'Aucun employé avec le numéro %', num_employe;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Call la fonction
+
+CALL afficher_infos_employe(10000);
+
+-- Question 3 
+
+-- Fonction pour calculer l'ancienneté d'un employé
+CREATE OR REPLACE FUNCTION calculer_anciennete(num_employe INTEGER, date_reference DATE)
+RETURNS VARCHAR
+AS $$
+DECLARE
+    anciennete INTERVAL;
+    annees INT;
+    mois INT;
+    jours INT;
+BEGIN
+    -- Vérifier si l'employé existe
+    SELECT date_embauche INTO anciennete FROM EMP.Employes WHERE id_employe = num_employe;
+    
+    IF anciennete IS NULL THEN
+        RETURN num_employe || ' est inexistant';
+    ELSIF date_reference < anciennete THEN
+        RETURN date_reference || ' est plus petite que la date d’embauche ' || anciennete;
+    ELSE
+        annees := EXTRACT(YEAR FROM age(date_reference, anciennete));
+        anciennete := anciennete + (annees || ' years')::INTERVAL;
+        mois := EXTRACT(MONTH FROM age(date_reference, anciennete));
+        anciennete := anciennete + (mois || ' months')::INTERVAL;
+        jours := EXTRACT(DAY FROM age(date_reference, anciennete));
+        
+        RETURN annees || ' ans ' || mois || ' mois ' || jours || ' jours';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Appeler la fonctiopn 
+
+SELECT calculer_anciennete(10010, '2024-04-25');
+
+-- Question 4 
+
+-- Fonction pour vérifier le salaire minimum
+CREATE OR REPLACE FUNCTION verifier_salaire_min()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Vérifier si le salaire est plus grand ou égal au salaire minimum
+    IF NEW.salaire_horaire < 15.25 THEN
+        RAISE EXCEPTION 'Le salaire doit être au moins égal au salaire minimum de 15.25$';
+    END IF;
+
+    -- Si le salaire est conforme, permettre l'insertion
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Déclencheur qui appelle la fonction avant l'insertion d'un nouvel employé
+CREATE TRIGGER before_insert_verifier_salaire_min
+BEFORE INSERT ON EMP.Employes
+FOR EACH ROW
+EXECUTE FUNCTION verifier_salaire_min();
+
+-- Appeler la fonction
+SELECT * FROM nom_de_votre_fonction(paramètre1, paramètre2, ...);
+SELECT * FROM verifier_salaire_min(10000);
+
+-- Question 5 
+-- Création d'une fonction pour vérifier le salaire minimum
+CREATE OR REPLACE FUNCTION verif_salaire_min()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Vérifier si le nouveau salaire est inférieur au salaire minimum
+    IF NEW.salaire_horaire < 15.25 THEN
+        RAISE EXCEPTION 'Le salaire doit être supérieur ou égal au salaire minimum (15.25$).';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Création du déclencheur pour appeler la fonction avant la mise à jour du salaire
+CREATE TRIGGER verif_salaire_min_trigger
+BEFORE UPDATE OF salaire_horaire ON EMP.Employes
+FOR EACH ROW
+EXECUTE FUNCTION verif_salaire_min();
+
+
+Question 6 
+
+CREATE OR REPLACE VIEW MAT.Vue_Portables_Logiciel AS
+SELECT P.*, L.nom_logiciel
+FROM MAT.Portables P
+INNER JOIN MAT.Portables_Logiciel PL ON P.id_portable = PL.id_portable
+INNER JOIN MAT.Logiciel L ON PL.id_logiciel = L.id_logiciel;
+
+Question 7 
+
+CREATE OR REPLACE PROCEDURE MAT.Proc_Insert_Portable_Logiciel(
+    manufacteur_input VARCHAR(16),
+    modele_input VARCHAR(16),
+    numero_serie_input VARCHAR(32),
+    date_achat_input DATE,
+    prix_input MONEY,
+    systeme_os_input INTEGER,
+    type_disque_input INTEGER,
+    taille_disque_input INTEGER,
+    type_memoire_input INTEGER,
+    nbr_memoire_input INTEGER,
+    type_reseau_input INTEGER,
+    adresse_mac_input MACADDR,
+    description_input VARCHAR(1024),
+    nom_logiciel_input VARCHAR(32)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    -- Insérer d'abord le portable
+    INSERT INTO MAT.Portables (
+        manufacteur, modele, numero_serie, date_achat, prix, systeme_os,
+        type_disque, taille_disque, type_memoire, nbr_memoire, type_reseau,
+        adresse_mac, description
+    ) VALUES (
+        manufacteur_input, modele_input, numero_serie_input, date_achat_input,
+        prix_input, systeme_os_input, type_disque_input, taille_disque_input,
+        type_memoire_input, nbr_memoire_input, type_reseau_input, adresse_mac_input,
+        description_input
+    );
+
+    -- Récupérer l'ID du portable nouvellement inséré
+    DECLARE new_portable_id INTEGER;
+    SELECT id_portable INTO new_portable_id
+    FROM MAT.Portables
+    WHERE numero_serie = numero_serie_input;
+
+    -- Insérer le logiciel lié au portable
+    INSERT INTO MAT.Portables_Logiciel (id_portable, id_logiciel)
+    VALUES (new_portable_id, (SELECT id_logiciel FROM MAT.Logiciel WHERE nom_logiciel = nom_logiciel_input));
+    
+    -- Afficher un message de confirmation
+    RAISE NOTICE 'Portable et logiciel insérés avec succès.';
+END;
+$$;
+
+
+Question 8 
+
+CREATE OR REPLACE FUNCTION MAT.Calcul_Prix_Total_Portable(id_portable_input INTEGER)
+RETURNS MONEY AS $$
+DECLARE
+    total_prix MONEY;
+BEGIN
+    SELECT SUM(prix) INTO total_prix
+    FROM MAT.Portables
+    WHERE id_portable = id_portable_input;
+
+    RETURN total_prix;
+END;
+$$ LANGUAGE plpgsql;
+
+Question 9 
+
+CREATE OR REPLACE FUNCTION MAT.Verifier_Nouveau_Portable()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Vérifier si le numéro de série du nouveau portable est unique
+    IF EXISTS (
+        SELECT 1
+        FROM MAT.Portables
+        WHERE numero_serie = NEW.numero_serie
+    ) THEN
+        RAISE EXCEPTION 'Le numéro de série doit être unique.';
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_insert_portable
+BEFORE INSERT ON MAT.Portables
+FOR EACH ROW
+EXECUTE FUNCTION MAT.Verifier_Nouveau_Portable();
+
