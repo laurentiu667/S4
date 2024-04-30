@@ -1,0 +1,23 @@
+Partie : 
+
+Savoir si la game est terminé
+
+Carte : 
+
+int nbr
+
+Pile : 
+
+int valeur
+
+String sens
+
+accepteCarte(Carte) savoir si la pile accepte une certaine carte
+
+Jeu : 
+
+Tableau de 8 cartes [][]
+
+Random r = new Random(97)
+
+faire un tableau de carte et le shuffle
