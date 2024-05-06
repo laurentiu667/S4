@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView nbCartesRestantes;
     private DragDrop ecouteur;
     private Context context;
-    int nblinear = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         pilecarte = new PileCarte(context ,partie.getListeCartesShuffle());
 
         // Ajouter les classes jouables
-        ajouterLesCartesJouables();
+        partie.ajouterLesCartesJouables(containerToutesLesCartes, partie);
 
         // Ajouter les ecouteurs
-        ajouetLesEcouteurs();
+        partie.ajouetLesEcouteurs(containerToutesLesCartes, ecouteur);
 
 
         // Ajouter les ecouteurs sur les colonnes
@@ -61,11 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        System.out.println("Nombre de linear : " + nblinear);
+        System.out.println("Nombre de linear : " + partie.compterLinear(containerToutesLesCartes));
 
-
-
-        afficherLesCartesRestantes();
+        partie.afficherLesCartesRestantes(nbCartesRestantes);
 
 
     }
@@ -80,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
             v.startDragAndDrop(null, shadowBuilder, v, 0);
             v.setVisibility(View.VISIBLE);
-            nblinear = 0;
+            partie.nblinear = 0;
 
             return true;
         }
@@ -95,17 +93,17 @@ public class MainActivity extends AppCompatActivity {
                     if (conteneur == ascendant1 || conteneur == ascendant2 || conteneur == descendant1 || conteneur == descendant2){
                         parent.removeView(carte);
                         pilecarte.reduirePile();
-                        afficherLesCartesRestantes();
+                        partie.afficherLesCartesRestantes(nbCartesRestantes);
                         conteneur.addView(carte);
 
-                        compterLinear();
+                        partie.compterLinear(containerToutesLesCartes);
 
                         if (parent.getChildCount() == 0) { // Vérifie si le parent est vide
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ajouterUneCarte(parent);
+                                    partie.ajouterUneCarte(parent, partie, ecouteur);
                                 }
                             }, 1000);
                         }
@@ -116,129 +114,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    public void ajouetLesEcouteurs(){
-        // Ajouter les ecouteurs sur les cartes
-        for (int i = 0; i < containerToutesLesCartes.getChildCount(); i++) {
-            LinearLayout colone = (LinearLayout) containerToutesLesCartes.getChildAt(i);
 
-            for (int j = 0; j < colone.getChildCount(); j++) {
-                LinearLayout colonne2 = (LinearLayout) colone.getChildAt(j);
-                for (int k = 0; k < colonne2.getChildCount(); k++) {
-                    LinearLayout carte = (LinearLayout) colonne2.getChildAt(k);
-                    carte.setOnDragListener(ecouteur);
-                    carte.setOnTouchListener(ecouteur);
-
-                    nblinear++;
-                }
-            }
-        }
-    }
-    public void ajouterUneCarte(LinearLayout parent) {
-        LinearLayout nouveauLayout = new LinearLayout(this);
-        nouveauLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
-
-
-        int nombrePourCarte = partie.getListeCartesShuffle().get(0);
-        nouveauLayout.setTag(nombrePourCarte);
-        partie.getListeCartesShuffle().remove(0);
-        nouveauLayout.setOnTouchListener(ecouteur);
-        nouveauLayout.setOnDragListener(ecouteur);
-        parent.addView(nouveauLayout);
-
-        if (nombrePourCarte >= 1 && nombrePourCarte <= 25){
-            nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte1a25));
-        } else if (nombrePourCarte >= 25 && nombrePourCarte <=50) {
-            nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte26a50));
-        } else if (nombrePourCarte >= 51 && nombrePourCarte <= 75) {
-            nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte51a75));
-        } else if (nombrePourCarte >= 76 && nombrePourCarte <= 98){
-            nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte76a98));
-        }
-
-        // Create a new TextView
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText(String.valueOf(nombrePourCarte));
-
-
-        textView.setTypeface(null, Typeface.BOLD);
-        textView.setTextColor(Color.BLACK);
-        textView.setPadding(10, 3, 0, 0);
-        textView.setTextSize(16);
-
-        nouveauLayout.addView(textView);
-    }
-    public int compterLinear(){
-        for (int i = 0; i < containerToutesLesCartes.getChildCount(); i++) {
-            LinearLayout colone = (LinearLayout) containerToutesLesCartes.getChildAt(i);
-
-            for (int j = 0; j < colone.getChildCount(); j++) {
-                LinearLayout colonne2 = (LinearLayout) colone.getChildAt(j);
-                for (int k = 0; k < colonne2.getChildCount(); k++) {
-                    LinearLayout carte = (LinearLayout) colonne2.getChildAt(k);
-                    nblinear++;
-                }
-            }
-        }
-        return nblinear;
-    }
-    public void ajouterLesCartesJouables(){
-        // Aajouter les cartes dans les colonnes
-        for (int i = 0; i < containerToutesLesCartes.getChildCount(); i++) {
-            LinearLayout colone = (LinearLayout) containerToutesLesCartes.getChildAt(i);
-
-            for (int j = 0; j < colone.getChildCount(); j++) {
-                LinearLayout colonne2 = (LinearLayout) colone.getChildAt(j);
-
-                // Vérifier si colonne2 a des enfants
-                if (colonne2.getChildCount() == 0 && colonne2 != null) {
-
-                    int nombrePourCarte = partie.getListeCartesShuffle().get(0);
-                    LinearLayout nouveauLayout = new LinearLayout(this);
-                    nouveauLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.MATCH_PARENT));
-
-                    nouveauLayout.setTag(nombrePourCarte);
-
-                    if (nombrePourCarte >= 1 && nombrePourCarte <= 25){
-                        nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte1a25));
-                    } else if (nombrePourCarte >= 25 && nombrePourCarte <=50) {
-                        nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte26a50));
-                    } else if (nombrePourCarte >= 51 && nombrePourCarte <= 75) {
-                        nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte51a75));
-                    } else if (nombrePourCarte >= 76 && nombrePourCarte <= 98){
-                        nouveauLayout.setBackground(getResources().getDrawable(R.drawable.carte76a98));
-                    }
-                    partie.getListeCartesShuffle().remove(0);
-                    pilecarte.reduirePile();
-                    colonne2.addView(nouveauLayout);
-
-                    // Create a new TextView
-                    TextView textView = new TextView(this);
-                    textView.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT));
-                    textView.setText(String.valueOf(nombrePourCarte));
-
-
-                    textView.setTextColor(Color.BLACK);
-                    textView.setTypeface(null, Typeface.BOLD);
-                    textView.setPadding(10, 3, 0, 0);
-                    textView.setTextSize(16);
-
-                    nouveauLayout.addView(textView);
-
-                }
-            }
-        }
-    }
-
-    public void afficherLesCartesRestantes(){
-        nbCartesRestantes.setText(String.valueOf(pilecarte.nbCartesRestantes()));
-    }
 }
