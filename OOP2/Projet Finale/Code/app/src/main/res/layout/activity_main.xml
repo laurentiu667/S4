@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6F3E0"
+    android:background="#E4DCC2"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:background="#43413D"
         android:orientation="horizontal">
 
@@ -29,17 +29,17 @@
                 android:gravity="center"
                 android:text="CARDS LEFT"
                 android:textColor="#DDDAC9"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/nbCartes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="0"
                 android:textColor="#DDDAC9"
-                android:textSize="19sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:gravity="center"
                 android:text="TIME"
                 android:textColor="#DDDAC9"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:gravity="center"
                 android:text="0"
                 android:textColor="#DDDAC9"
-                android:textSize="19sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:text="SCORE"
                 android:textColor="#DDDAC9"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -93,7 +93,7 @@
                 android:gravity="center"
                 android:text="0"
                 android:textColor="#DDDAC9"
-                android:textSize="19sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -101,13 +101,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/button3"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/topcontainer">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="OPTIONS"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/button3"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/topcontainer" />
+
+        <Space
+            android:layout_width="60dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/button3"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/topcontainer">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="MENU"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="6"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -120,8 +176,8 @@
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:layout_gravity="right"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius_border"
 
@@ -147,15 +203,38 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ascendant1"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/carte0et98"
+                        android:orientation="horizontal"
+                        android:tag="0">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="3dp"
+                            android:text="0"
+                            android:textColor="#AEAEAE"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:layout_gravity="right"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius_border"
                 android:orientation="horizontal">
@@ -181,7 +260,30 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/descendant1"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/carte0et98"
+                        android:orientation="horizontal"
+                        android:tag="0">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="3dp"
+                            android:text="98"
+                            android:textColor="#AEAEAE"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -194,8 +296,8 @@
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="0dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius_border"
                 android:orientation="horizontal">
@@ -204,7 +306,31 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ascendant2"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/carte0et98"
+                        android:orientation="horizontal"
+                        android:tag="0">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="3dp"
+                            android:text="0"
+                            android:textColor="#AEAEAE"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -226,8 +352,8 @@
             <LinearLayout
                 android:layout_width="150dp"
                 android:layout_height="0dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius_border"
                 android:orientation="horizontal">
@@ -236,7 +362,31 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/descendant2"
+                        android:layout_width="50dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/carte0et98"
+                        android:orientation="horizontal"
+                        android:tag="0">
+
+                        <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="3dp"
+                            android:text="98"
+                            android:textColor="#AEAEAE"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -260,6 +410,130 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp"
+        android:paddingTop="10dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/global8cards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/carterepos"
+                    android:orientation="horizontal"
+                    android:tag="1">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/carterepos"
+                    android:orientation="horizontal"
+                    android:tag="2">
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal"
+                    android:tag="3">
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:orientation="horizontal"
+                    android:tag="4">
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal"
+                    android:tag="5">
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="15dp"
+                    android:tag="6">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:layout_marginRight="15dp"
+                    android:orientation="horizontal"
+                    android:tag="7">
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/carterepos"
+                    android:orientation="horizontal"
+                    android:tag="8">
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>
