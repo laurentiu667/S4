@@ -6,20 +6,24 @@ import android.graphics.Typeface;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 public class Partie {
 
+    final int NB_CARTES = 10;
     private ArrayList<Integer> listeCartesShuffle = new ArrayList<Integer>();
+    private ArrayList<Integer> listeCarteMain = new ArrayList<Integer>();
     private PileCarte pileCarte;
     Context context;
     int nblinear = 0;
+    GestionDB gestionDB;
 
     public Partie(Context context) {
         // Créer un array de nombres de 1 à 97
-        for (int i = 1; i <= 97; i++) {
+        for (int i = 1; i <= NB_CARTES; i++) {
             listeCartesShuffle.add(i);
         }
         this.context = context;
@@ -27,15 +31,68 @@ public class Partie {
         shuffleCarte();
         // Créer la pile de cartes avec l'array mélangé
         pileCarte = new PileCarte(context ,listeCartesShuffle);
+        gestionDB = new GestionDB(this.context);
     }
 
     public void shuffleCarte() {
         Collections.shuffle(listeCartesShuffle);
     }
 
-    public boolean partieTerminee() {
-        return false;
+    public boolean aucuneCarteJouable(LinearLayout containerToutesLesCartes, String ascendant1, String ascendant2, String descendant1, String descendant2) {
+        listeCarteMain.clear();
+        Integer tagAscendant1 = Integer.valueOf(ascendant1);
+        Integer tagAscendant2 = Integer.valueOf(ascendant2);
+        Integer tagDescendant1 = Integer.valueOf(descendant1);
+        Integer tagDescendant2 = Integer.valueOf(descendant2);
+
+
+
+
+        // Ajouter les ecouteurs sur les cartes
+        for (int i = 0; i < containerToutesLesCartes.getChildCount(); i++) {
+            LinearLayout colone = (LinearLayout) containerToutesLesCartes.getChildAt(i);
+
+            for (int j = 0; j < colone.getChildCount(); j++) {
+                LinearLayout colonne2 = (LinearLayout) colone.getChildAt(j);
+                for (int k = 0; k < colonne2.getChildCount(); k++) {
+                    LinearLayout carte = (LinearLayout) colonne2.getChildAt(k);
+                    listeCarteMain.add((Integer) carte.getTag());
+
+                }
+            }
+        }
+        System.out.println("ascendant1 : " + tagAscendant1 + " ascendant2 : " + tagAscendant2 + " descendant1 : " + tagDescendant1 + " descendant2 : " + tagDescendant2);
+        for (Integer carte : listeCarteMain) {
+            System.out.println("carte : " + carte);
+        }
+
+        // Vérifier si les cartes sont jouables
+        // Vérifier si une carte est jouable en tant qu'ascendant ou descendant
+        for (Integer carte : listeCarteMain) {
+            boolean laReglesEstRespectee = Math.abs(carte - tagAscendant1) == 10 || Math.abs(carte - tagAscendant2) == 10 || Math.abs(carte - tagDescendant1) == 10 || Math.abs(carte - tagDescendant2) == 10;
+            if (carte > tagAscendant1 || laReglesEstRespectee || carte > tagAscendant2 || laReglesEstRespectee || carte < tagDescendant1 || laReglesEstRespectee || carte < tagDescendant2 || laReglesEstRespectee) {
+                System.out.println("au moins une carte est jouable");
+                return false; // au moins une carte est jouable
+            }
+        }
+
+        return true; // aucune carte jouable
+
     }
+
+
+    public boolean partieTerminee(Score score, LinearLayout containerToutesLesCartes, String ascendant1, String ascendant2, String descendant1, String descendant2) {
+        if ( aucuneCarteJouable(containerToutesLesCartes, ascendant1, ascendant2, descendant1, descendant2)) {
+            gestionDB.ajouter_new_score(score);
+            System.out.println("tu as perdu");
+            return true; // partie terminée
+        } else if ( pileCarte.nbCartesRestantes() == 0){
+            System.out.println("tu as gagné");
+            return true; // partie terminée
+        }
+        return false; // partie non terminée
+    }
+
 
     public ArrayList<Integer> getListeCartesShuffle() {
         return listeCartesShuffle;
@@ -52,6 +109,7 @@ public class Partie {
                     LinearLayout carte = (LinearLayout) colonne2.getChildAt(k);
                     carte.setOnDragListener(ecouteur);
                     carte.setOnTouchListener(ecouteur);
+                    System.out.println("tag des cartes : " + carte.getTag());
 
                     nblinear++;
                 }
@@ -59,6 +117,9 @@ public class Partie {
         }
         return nblinear;
     }
+
+
+
     public void ajouterUneCarte(LinearLayout parent, Partie partie, MainActivity.DragDrop ecouteur) {
         LinearLayout nouveauLayout = new LinearLayout(this.context);
         nouveauLayout.setLayoutParams(new LinearLayout.LayoutParams(
@@ -83,6 +144,7 @@ public class Partie {
             nouveauLayout.setBackground(context.getDrawable(R.drawable.carte76a98));
         }
 
+
         // Create a new TextView
         TextView textView = new TextView(this.context);
         textView.setLayoutParams(new LinearLayout.LayoutParams(
@@ -92,9 +154,9 @@ public class Partie {
 
 
         textView.setTypeface(null, Typeface.BOLD);
-        textView.setTextColor(Color.BLACK);
-        textView.setPadding(10, 3, 0, 0);
-        textView.setTextSize(16);
+        textView.setTextColor(Color.WHITE);
+        textView.setPadding(14, 5, 0, 0);
+        textView.setTextSize(14);
 
         nouveauLayout.addView(textView);
     }
@@ -141,7 +203,7 @@ public class Partie {
                         nouveauLayout.setBackground(context.getDrawable(R.drawable.carte76a98));
                     }
                     partie.getListeCartesShuffle().remove(0);
-                    pileCarte.reduirePile();
+
                     colonne2.addView(nouveauLayout);
 
                     // Create a new TextView
@@ -152,10 +214,11 @@ public class Partie {
                     textView.setText(String.valueOf(nombrePourCarte));
 
 
-                    textView.setTextColor(Color.BLACK);
+                    textView.setTextColor(Color.WHITE);
                     textView.setTypeface(null, Typeface.BOLD);
-                    textView.setPadding(10, 3, 0, 0);
-                    textView.setTextSize(16);
+                    textView.setPadding(14, 5, 0, 0);
+                    textView.setTextSize(14);
+
 
                     nouveauLayout.addView(textView);
 
@@ -163,8 +226,14 @@ public class Partie {
             }
         }
     }
+    public void reduirePile(){
+        pileCarte.listeCartes.remove(pileCarte.listeCartes.size()-1);
 
-    public void afficherLesCartesRestantes(TextView nbCartesRestantes){
-        nbCartesRestantes.setText(String.valueOf(pileCarte.nbCartesRestantes()));
     }
+
+    public int afficherLesCartesRestantes(TextView nbCartesRestantes){
+        nbCartesRestantes.setText(String.valueOf(pileCarte.nbCartesRestantes()));
+        return pileCarte.nbCartesRestantes();
+    }
+
 }

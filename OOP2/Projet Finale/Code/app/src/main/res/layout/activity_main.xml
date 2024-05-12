@@ -60,7 +60,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/timer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -87,7 +87,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -223,7 +223,7 @@
                             android:paddingTop="3dp"
                             android:text="0"
                             android:textColor="#AEAEAE"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -269,7 +269,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/carte0et98"
                         android:orientation="horizontal"
-                        android:tag="0">
+                        android:tag="98">
 
                         <TextView
                             android:id="@+id/textView4"
@@ -280,7 +280,7 @@
                             android:paddingTop="3dp"
                             android:text="98"
                             android:textColor="#AEAEAE"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -327,7 +327,7 @@
                             android:paddingTop="3dp"
                             android:text="0"
                             android:textColor="#AEAEAE"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -372,7 +372,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/carte0et98"
                         android:orientation="horizontal"
-                        android:tag="0">
+                        android:tag="98">
 
                         <TextView
                             android:id="@+id/textView4"
@@ -383,7 +383,7 @@
                             android:paddingTop="3dp"
                             android:text="98"
                             android:textColor="#AEAEAE"
-                            android:textSize="16sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>

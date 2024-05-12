@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.DragEvent;
@@ -15,17 +17,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
     Partie partie;
     PileCarte pilecarte;
     Carte carte;
+    Timer timer;
+    Score score;
     private LinearLayout containerToutesLesCartes;
     LinearLayout ascendant1, ascendant2, descendant1, descendant2;
-    TextView nbCartesRestantes;
+    TextView nbCartesRestantes, temps, scoreTotal;
     private DragDrop ecouteur;
     private Context context;
+    GestionDB gestionDB;
+
+    private MediaPlayer mediaPlayer;
+
 
 
     @Override
@@ -40,10 +50,13 @@ public class MainActivity extends AppCompatActivity {
         descendant1 = findViewById(R.id.descendant1);
         descendant2 = findViewById(R.id.descendant2);
         nbCartesRestantes = findViewById(R.id.nbCartes);
+        scoreTotal = findViewById(R.id.score);
+        temps = findViewById(R.id.timer);
         ecouteur = new DragDrop();
+        gestionDB = GestionDB.getInstance(context);
 
         //Commencer la partie
-        partie = new Partie(context);
+        partie = new Partie(this);
         pilecarte = new PileCarte(context ,partie.getListeCartesShuffle());
 
         // Ajouter les classes jouables
@@ -51,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
 
         // Ajouter les ecouteurs
         partie.ajouetLesEcouteurs(containerToutesLesCartes, ecouteur);
+
+        // lancer le timer
+
+        timer = new Timer(temps);
+        timer.startTimer();
+
+        // score
+
+        score = new Score(context);
+
+        mediaPlayer = MediaPlayer.create(context, R.raw.card);
+        mediaPlayer.setVolume(1.5f, 1.5f);
+
 
 
         // Ajouter les ecouteurs sur les colonnes
@@ -61,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        System.out.println("Nombre de linear : " + partie.compterLinear(containerToutesLesCartes));
-
         partie.afficherLesCartesRestantes(nbCartesRestantes);
-
 
     }
 
@@ -73,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     public class DragDrop implements View.OnDragListener, View.OnTouchListener {
         View carte = null;
 
+
         @Override
         public boolean onTouch(View v, MotionEvent motionEvent) {
             View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
@@ -80,35 +104,75 @@ public class MainActivity extends AppCompatActivity {
             v.setVisibility(View.VISIBLE);
             partie.nblinear = 0;
 
+
             return true;
         }
 
         public boolean onDrag(View v, DragEvent event) {
+
             switch (event.getAction()) {
                 case DragEvent.ACTION_DROP:
                     carte = (View) event.getLocalState();
                     LinearLayout parent = (LinearLayout) carte.getParent();
                     LinearLayout conteneur = (LinearLayout) v;
+                   if (conteneur == ascendant1 || conteneur == ascendant2 || conteneur == descendant1 || conteneur == descendant2){
+                        mediaPlayer.start();
+                        Integer tagCartePrecedente = Integer.valueOf((String) conteneur.getTag().toString());
+                        Integer tagCarteActuelle = Integer.valueOf((String) carte.getTag().toString());
 
-                    if (conteneur == ascendant1 || conteneur == ascendant2 || conteneur == descendant1 || conteneur == descendant2){
-                        parent.removeView(carte);
-                        pilecarte.reduirePile();
-                        partie.afficherLesCartesRestantes(nbCartesRestantes);
-                        conteneur.addView(carte);
+                        Integer reglePlusouMoins10 = tagCartePrecedente - tagCarteActuelle;
+                        boolean laReglesEstRespectee = Math.abs(reglePlusouMoins10) == 10;
 
-                        partie.compterLinear(containerToutesLesCartes);
+                        if (conteneur == ascendant1 || conteneur == ascendant2){
 
-                        if (parent.getChildCount() == 0) { // Vérifie si le parent est vide
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
+                            if (tagCartePrecedente < tagCarteActuelle || laReglesEstRespectee){
+
+                                carte.setOnTouchListener(null);
+                                carte.setOnDragListener(null);
+                                conteneur.setTag(tagCarteActuelle);
+                                conteneur.removeAllViews();
+                                parent.removeView(carte);
+                                conteneur.addView(carte);
+                                score.calculerPointChaqueCartejouer();
+                                scoreTotal.setText(String.valueOf(score.calculerScoreTotal()));
+                                if (partie.afficherLesCartesRestantes(nbCartesRestantes) != 0){
+
                                     partie.ajouterUneCarte(parent, partie, ecouteur);
+                                    partie.reduirePile();
                                 }
-                            }, 1000);
-                        }
-                    }
-                    break;
+
+                            }
+                        } else if (conteneur == descendant1 || conteneur == descendant2){
+                            if (tagCartePrecedente > tagCarteActuelle || laReglesEstRespectee){
+                                mediaPlayer.start();
+                                carte.setOnTouchListener(null);
+                                carte.setOnDragListener(null);
+                                conteneur.setTag(tagCarteActuelle);
+                                conteneur.removeAllViews();
+                                parent.removeView(carte);
+                                conteneur.addView(carte);
+                                score.calculerPointChaqueCartejouer();
+                                scoreTotal.setText(String.valueOf(score.calculerScoreTotal()));
+
+                                if (partie.afficherLesCartesRestantes(nbCartesRestantes) != 0){
+
+                                    partie.ajouterUneCarte(parent, partie, ecouteur);
+                                    partie.reduirePile();
+
+                                }
+
+
+                            }
+                        }if (partie.partieTerminee(score, containerToutesLesCartes, ascendant1.getTag().toString(), ascendant2.getTag().toString(), descendant1.getTag().toString(), descendant2.getTag().toString())){
+
+                           Intent intent = new Intent(context, BeginPage.class);
+                           startActivity(intent);
+                       }
+
+
+
+                   }
+                   break;
             }
             return true;
         }
@@ -116,3 +180,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+

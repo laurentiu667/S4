@@ -20,17 +20,20 @@ public class PileCarte {
 
     }
 
+    // cela permet d afficher les cartes en shuffle
+
     public void afficherPile() {
         for (Carte carte : listeCartes) {
             System.out.println("carte : " + carte.getNombre());
         }
     }
-    public void reduirePile(){
-        listeCartes.remove(listeCartes.size()-1);
-    }
+
     public int nbCartesRestantes(){
         return listeCartes.size();
     }
+
+
+
 
 
 }
