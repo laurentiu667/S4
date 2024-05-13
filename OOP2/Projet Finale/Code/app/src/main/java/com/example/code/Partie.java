@@ -1,6 +1,7 @@
 package com.example.code;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.widget.LinearLayout;
@@ -21,6 +22,8 @@ public class Partie {
     int nblinear = 0;
     GestionDB gestionDB;
 
+    WinLoose winLoose;
+
     public Partie(Context context) {
         // Créer un array de nombres de 1 à 97
         for (int i = 1; i <= NB_CARTES; i++) {
@@ -32,6 +35,7 @@ public class Partie {
         // Créer la pile de cartes avec l'array mélangé
         pileCarte = new PileCarte(context ,listeCartesShuffle);
         gestionDB = new GestionDB(this.context);
+
     }
 
     public void shuffleCarte() {
@@ -66,8 +70,6 @@ public class Partie {
             System.out.println("carte : " + carte);
         }
 
-        // Vérifier si les cartes sont jouables
-        // Vérifier si une carte est jouable en tant qu'ascendant ou descendant
         for (Integer carte : listeCarteMain) {
             boolean laReglesEstRespectee = Math.abs(carte - tagAscendant1) == 10 || Math.abs(carte - tagAscendant2) == 10 || Math.abs(carte - tagDescendant1) == 10 || Math.abs(carte - tagDescendant2) == 10;
             if (carte > tagAscendant1 || laReglesEstRespectee || carte > tagAscendant2 || laReglesEstRespectee || carte < tagDescendant1 || laReglesEstRespectee || carte < tagDescendant2 || laReglesEstRespectee) {
@@ -82,15 +84,20 @@ public class Partie {
 
 
     public boolean partieTerminee(Score score, LinearLayout containerToutesLesCartes, String ascendant1, String ascendant2, String descendant1, String descendant2) {
+
         if ( aucuneCarteJouable(containerToutesLesCartes, ascendant1, ascendant2, descendant1, descendant2)) {
-            gestionDB.ajouter_new_score(score);
-            System.out.println("tu as perdu");
-            return true; // partie terminée
-        } else if ( pileCarte.nbCartesRestantes() == 0){
-            System.out.println("tu as gagné");
+
             return true; // partie terminée
         }
         return false; // partie non terminée
+    }
+
+    public boolean perdu_0carte_0dispo(LinearLayout containerToutesLesCartes){
+        if (compterLinear(containerToutesLesCartes) == 0){
+
+            return true;
+        }
+        return false;
     }
 
 
@@ -182,7 +189,7 @@ public class Partie {
             for (int j = 0; j < colone.getChildCount(); j++) {
                 LinearLayout colonne2 = (LinearLayout) colone.getChildAt(j);
 
-                // Vérifier si colonne2 a des enfants
+
                 if (colonne2.getChildCount() == 0 && colonne2 != null) {
 
                     int nombrePourCarte = partie.getListeCartesShuffle().get(0);
@@ -205,8 +212,8 @@ public class Partie {
                     partie.getListeCartesShuffle().remove(0);
 
                     colonne2.addView(nouveauLayout);
+                    reduirePile();
 
-                    // Create a new TextView
                     TextView textView = new TextView(this.context);
                     textView.setLayoutParams(new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.WRAP_CONTENT,

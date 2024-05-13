@@ -14,6 +14,8 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,13 +30,18 @@ public class MainActivity extends AppCompatActivity {
     Timer timer;
     Score score;
     private LinearLayout containerToutesLesCartes;
-    LinearLayout ascendant1, ascendant2, descendant1, descendant2;
+    LinearLayout ascendant1, ascendant2, descendant1, descendant2, menu_button;
     TextView nbCartesRestantes, temps, scoreTotal;
     private DragDrop ecouteur;
+    private Ecouteur ecouteurClick;
     private Context context;
     GestionDB gestionDB;
+    Menu menu;
 
     private MediaPlayer mediaPlayer;
+    Animation slideInAnimation;
+
+    WinLoose winLoose;
 
 
 
@@ -52,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
         nbCartesRestantes = findViewById(R.id.nbCartes);
         scoreTotal = findViewById(R.id.score);
         temps = findViewById(R.id.timer);
+        menu_button = findViewById(R.id.menubutton);
         ecouteur = new DragDrop();
+        ecouteurClick = new Ecouteur();
         gestionDB = GestionDB.getInstance(context);
 
         //Commencer la partie
@@ -77,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(context, R.raw.card);
         mediaPlayer.setVolume(1.5f, 1.5f);
 
+        // menu
+        menu = new Menu(context);
+
+        // animation
+        slideInAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_in);
+
+        // win ou loose
+        winLoose = new WinLoose(context);
 
 
         // Ajouter les ecouteurs sur les colonnes
@@ -84,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         ascendant2.setOnDragListener(ecouteur);
         descendant1.setOnDragListener(ecouteur);
         descendant2.setOnDragListener(ecouteur);
+        menu_button.setOnClickListener(ecouteurClick);
 
 
 
@@ -91,10 +109,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void showMenu(){
+
+        menu.show();
+        menu.quittermenu.startAnimation(slideInAnimation);
+        menu.nouvellepartie.startAnimation(slideInAnimation);
+        menu.classementmenu.startAnimation(slideInAnimation);
+        menu.quitterjeux.startAnimation(slideInAnimation);
+    }
+
+    public class Ecouteur implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if (v instanceof LinearLayout){
+                showMenu();
+            }
+        }
+    }
 
 
     public class DragDrop implements View.OnDragListener, View.OnTouchListener {
         View carte = null;
+
 
 
         @Override
@@ -163,10 +200,36 @@ public class MainActivity extends AppCompatActivity {
 
 
                             }
-                        }if (partie.partieTerminee(score, containerToutesLesCartes, ascendant1.getTag().toString(), ascendant2.getTag().toString(), descendant1.getTag().toString(), descendant2.getTag().toString())){
+                        }
+                       if (partie.perdu_0carte_0dispo(containerToutesLesCartes)) {
+                           gestionDB.ajouter_new_score(score);
+                           winLoose.setMessage("gagné");
+                           winLoose.show();
+                           if (winLoose.isShowing()){
+                               Handler handler = new Handler();
+                               handler.postDelayed(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       Intent intent = new Intent(context, BeginPage.class);
+                                       context.startActivity(intent);
+                                   }
+                               }, 5000);
+                           }
+                       } else if (partie.partieTerminee(score, containerToutesLesCartes, ascendant1.getTag().toString(), ascendant2.getTag().toString(), descendant1.getTag().toString(), descendant2.getTag().toString())){
+                           gestionDB.ajouter_new_score(score);
+                           winLoose.setMessage("perdu");
+                           winLoose.show();
+                           if (winLoose.isShowing()){
+                               Handler handler = new Handler();
+                               handler.postDelayed(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       Intent intent = new Intent(context, BeginPage.class);
+                                       context.startActivity(intent);
+                                   }
+                               }, 5000);
 
-                           Intent intent = new Intent(context, BeginPage.class);
-                           startActivity(intent);
+                           }
                        }
 
 
