@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class Partie {
 
-    final int NB_CARTES = 10;
+    final int NB_CARTES = 97;
     private ArrayList<Integer> listeCartesShuffle = new ArrayList<Integer>();
     private ArrayList<Integer> listeCarteMain = new ArrayList<Integer>();
     private PileCarte pileCarte;
