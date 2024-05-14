@@ -37,6 +37,15 @@ public class GestionDB extends SQLiteOpenHelper {
         inseration_data(new Equipe("Foreurs de Val d’Or", "Ouest", "Centre Agnico Eagle", 2600), db);
         inseration_data(new Equipe("Armada de Blainville", "Ouest", "Centre Rousseau", 3000), db);
     }
+//    public int getCapaciteArena(String nomArena){
+//        SQLiteDatabase database = this.getReadableDatabase();
+//        Cursor cursor = database.rawQuery("SELECT Capacite FROM EquipesLHJMQ WHERE Arena = ?", new String[]{nomArena});
+//        if (cursor.moveToNext()){
+//            return cursor.getInt(0);
+//        }
+//        cursor.close();
+//        return -1; // Retourne -1 si aucune arène avec ce nom n'a été trouvée
+//    }
 
     // Méthode appelée lors d'une mise à jour de la base de données
     @Override
