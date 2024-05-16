@@ -8,8 +8,26 @@
     android:orientation="vertical"
     tools:context=".scorepage">
 
-    <ListView
-        android:id="@+id/listescore"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Le classement des meilleurs scores"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/listescore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="center" />
+    </LinearLayout>
+
 </LinearLayout>

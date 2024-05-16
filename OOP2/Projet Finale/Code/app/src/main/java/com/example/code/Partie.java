@@ -22,7 +22,6 @@ public class Partie {
     int nblinear = 0;
     GestionDB gestionDB;
 
-    WinLoose winLoose;
 
     public Partie(Context context) {
         // Créer un array de nombres de 1 à 97
@@ -48,8 +47,6 @@ public class Partie {
         Integer tagAscendant2 = Integer.valueOf(ascendant2);
         Integer tagDescendant1 = Integer.valueOf(descendant1);
         Integer tagDescendant2 = Integer.valueOf(descendant2);
-
-
 
 
         // Ajouter les ecouteurs sur les cartes
@@ -151,8 +148,6 @@ public class Partie {
             nouveauLayout.setBackground(context.getDrawable(R.drawable.carte76a98));
         }
 
-
-        // Create a new TextView
         TextView textView = new TextView(this.context);
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

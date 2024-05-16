@@ -144,7 +144,23 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
+        // Méthode pour traiter les actions communes
+        public void verifAjouterCarte(View carte, LinearLayout conteneur, LinearLayout parent, Score score, TextView scoreTotal, TextView nbCartesRestantes, Partie partie, DragDrop ecouteur, Integer tagCarteActuelle){
+            // Actions communes à traiter si la condition est remplie
+            carte.setOnTouchListener(null);
+            carte.setOnDragListener(null);
+            conteneur.setTag(tagCarteActuelle);
+            conteneur.removeAllViews();
+            parent.removeView(carte);
+            conteneur.addView(carte);
+            score.calculerPointChaqueCartejouer();
+            scoreTotal.setText(String.valueOf(score.calculerScoreTotal()));
 
+            if (partie.afficherLesCartesRestantes(nbCartesRestantes) != 0) {
+                partie.ajouterUneCarte(parent, partie, ecouteur);
+                partie.reduirePile();
+            }
+        }
         public boolean onDrag(View v, DragEvent event) {
 
             switch (event.getAction()) {
@@ -152,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     carte = (View) event.getLocalState();
                     LinearLayout parent = (LinearLayout) carte.getParent();
                     LinearLayout conteneur = (LinearLayout) v;
-                   if (conteneur == ascendant1 || conteneur == ascendant2 || conteneur == descendant1 || conteneur == descendant2){
+                    if (conteneur == ascendant1 || conteneur == ascendant2 || conteneur == descendant1 || conteneur == descendant2){
                         mediaPlayer.start();
                         Integer tagCartePrecedente = Integer.valueOf((String) conteneur.getTag().toString());
                         Integer tagCarteActuelle = Integer.valueOf((String) carte.getTag().toString());
@@ -160,88 +176,53 @@ public class MainActivity extends AppCompatActivity {
                         Integer reglePlusouMoins10 = tagCartePrecedente - tagCarteActuelle;
                         boolean laReglesEstRespectee = Math.abs(reglePlusouMoins10) == 10;
 
-                        if (conteneur == ascendant1 || conteneur == ascendant2){
+                        if ((conteneur == ascendant1 || conteneur == ascendant2) && (tagCartePrecedente < tagCarteActuelle || laReglesEstRespectee)) {
+                            verifAjouterCarte(carte, conteneur, parent, score, scoreTotal, nbCartesRestantes, partie, ecouteur, tagCarteActuelle);
+                        } else if ((conteneur == descendant1 || conteneur == descendant2) && (tagCartePrecedente > tagCarteActuelle || laReglesEstRespectee)) {
+                            verifAjouterCarte(carte, conteneur, parent, score, scoreTotal, nbCartesRestantes, partie, ecouteur, tagCarteActuelle);
+                        }
 
-                            if (tagCartePrecedente < tagCarteActuelle || laReglesEstRespectee){
+                        if (partie.perdu_0carte_0dispo(containerToutesLesCartes)) {
+                            gestionDB.ajouter_new_score(score);
+                            winLoose.setMessage("gagné");
+                            winLoose.show();
+                            Handler handler = new Handler();
+                            if (winLoose.isShowing()){
 
-                                carte.setOnTouchListener(null);
-                                carte.setOnDragListener(null);
-                                conteneur.setTag(tagCarteActuelle);
-                                conteneur.removeAllViews();
-                                parent.removeView(carte);
-                                conteneur.addView(carte);
-                                score.calculerPointChaqueCartejouer();
-                                scoreTotal.setText(String.valueOf(score.calculerScoreTotal()));
-                                if (partie.afficherLesCartesRestantes(nbCartesRestantes) != 0){
-
-                                    partie.ajouterUneCarte(parent, partie, ecouteur);
-                                    partie.reduirePile();
-                                }
-
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(context, BeginPage.class);
+                                        context.startActivity(intent);
+                                    }
+                                }, 2000);
                             }
-                        } else if (conteneur == descendant1 || conteneur == descendant2){
-                            if (tagCartePrecedente > tagCarteActuelle || laReglesEstRespectee){
-                                mediaPlayer.start();
-                                carte.setOnTouchListener(null);
-                                carte.setOnDragListener(null);
-                                conteneur.setTag(tagCarteActuelle);
-                                conteneur.removeAllViews();
-                                parent.removeView(carte);
-                                conteneur.addView(carte);
-                                score.calculerPointChaqueCartejouer();
-                                scoreTotal.setText(String.valueOf(score.calculerScoreTotal()));
-
-                                if (partie.afficherLesCartesRestantes(nbCartesRestantes) != 0){
-
-                                    partie.ajouterUneCarte(parent, partie, ecouteur);
-                                    partie.reduirePile();
-
-                                }
-//
-
+                        } else if (partie.partieTerminee(score, containerToutesLesCartes, ascendant1.getTag().toString(), ascendant2.getTag().toString(), descendant1.getTag().toString(), descendant2.getTag().toString())){
+                            gestionDB.ajouter_new_score(score);
+                            winLoose.setMessage("perdu");
+                            winLoose.show();
+                            if (winLoose.isShowing()){
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(context, BeginPage.class);
+                                        context.startActivity(intent);
+                                    }
+                                }, 2000);
 
                             }
                         }
-                       if (partie.perdu_0carte_0dispo(containerToutesLesCartes)) {
-                           gestionDB.ajouter_new_score(score);
-                           winLoose.setMessage("gagné");
-                           winLoose.show();
-                           if (winLoose.isShowing()){
-                               Handler handler = new Handler();
-                               handler.postDelayed(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       Intent intent = new Intent(context, BeginPage.class);
-                                       context.startActivity(intent);
-                                   }
-                               }, 5000);
-                           }
-                       } else if (partie.partieTerminee(score, containerToutesLesCartes, ascendant1.getTag().toString(), ascendant2.getTag().toString(), descendant1.getTag().toString(), descendant2.getTag().toString())){
-                           gestionDB.ajouter_new_score(score);
-                           winLoose.setMessage("perdu");
-                           winLoose.show();
-                           if (winLoose.isShowing()){
-                               Handler handler = new Handler();
-                               handler.postDelayed(new Runnable() {
-                                   @Override
-                                   public void run() {
-                                       Intent intent = new Intent(context, BeginPage.class);
-                                       context.startActivity(intent);
-                                   }
-                               }, 5000);
-
-                           }
-                       }
 
 
 
-                   }
-                   break;
+                    }
+                    break;
             }
             return true;
         }
 
     }
 
-}
 
+}

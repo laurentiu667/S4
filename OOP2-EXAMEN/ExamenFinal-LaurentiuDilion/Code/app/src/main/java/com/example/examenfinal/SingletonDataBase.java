@@ -51,19 +51,12 @@ public class SingletonDataBase extends SQLiteOpenHelper {
     }
 
     public String retourner_pays_hasard(){
-        Random r = new Random();
-        String query = "SELECT COUNT(*) FROM drapeau";
-        Cursor cursor = database.rawQuery(query, null);
-        cursor.moveToFirst();
-        int count = cursor.getInt(0);
-        int randomRow = r.nextInt(count);
-        query = "SELECT pays FROM drapeau LIMIT 1 OFFSET " + randomRow;
-        cursor = database.rawQuery(query, null);
+        Cursor cursor = database.rawQuery("SELECT pays FROM drapeau ORDER BY RANDOM() LIMIT 1", null);
         cursor.moveToFirst();
         return cursor.getString(0);
     }
     public boolean pays_verif(String pays, String cg, String cc, String cd){
-        String query = "SELECT * FROM drapeau WHERE pays = ? AND couleurG = ? AND couleurC = ? AND couleurD = ?";
+        String query = "SELECT _id FROM drapeau WHERE pays = ? AND couleurG = ? AND couleurC = ? AND couleurD = ?";
         Cursor cursor = database.rawQuery(query, new String[]{pays, cg, cc, cd});
         boolean match = cursor.moveToFirst();
         cursor.close();
