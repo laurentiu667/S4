@@ -103,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         descendant2.setOnDragListener(ecouteur);
         menu_button.setOnClickListener(ecouteurClick);
 
-
-
         partie.afficherLesCartesRestantes(nbCartesRestantes);
 
     }
@@ -128,11 +126,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public class DragDrop implements View.OnDragListener, View.OnTouchListener {
         View carte = null;
-
-
 
         @Override
         public boolean onTouch(View v, MotionEvent motionEvent) {
@@ -140,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
             v.startDragAndDrop(null, shadowBuilder, v, 0);
             v.setVisibility(View.VISIBLE);
             partie.nblinear = 0;
-
 
             return true;
         }
